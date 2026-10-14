@@ -1,0 +1,4 @@
+CONTAINER ID   NAME                         CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O     PIDS
+dee09cc16822   legacydesk-lab-app-1         0.02%     22.65MiB / 256MiB   8.85%     28.3kB / 84.9kB   0B / 32.8kB   1
+9f2344ab793e   legacydesk-lab-nginx-1       0.00%     8.883MiB / 128MiB   6.94%     322kB / 325kB     0B / 4.1kB    9
+086c5451f1ce   legacydesk-lab-csrf-demo-1   0.02%     16.92MiB / 64MiB    26.43%    4.1kB / 2.98kB    0B / 1.92MB   1
