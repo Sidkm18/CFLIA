@@ -1,0 +1,23 @@
+test_concurrent_report_quota_is_atomic (test_security.SecurityTests.test_concurrent_report_quota_is_atomic) ... ok
+test_csrf_token_and_origin_are_both_required (test_security.SecurityTests.test_csrf_token_and_origin_are_both_required) ... ok
+test_debug_removed_and_secure_headers_on_errors (test_security.SecurityTests.test_debug_removed_and_secure_headers_on_errors) ... ok
+test_download_allowlist_rejects_traversal (test_security.SecurityTests.test_download_allowlist_rejects_traversal) ... ok
+test_expired_and_idle_sessions_cannot_be_reused (test_security.SecurityTests.test_expired_and_idle_sessions_cannot_be_reused) ... ok
+test_input_bounds_and_duplicate_fields (test_security.SecurityTests.test_input_bounds_and_duplicate_fields) ... ok
+test_invalid_hosts_are_rejected (test_security.SecurityTests.test_invalid_hosts_are_rejected) ... ok
+test_legitimate_employee_workflows (test_security.SecurityTests.test_legitimate_employee_workflows) ... ok
+test_login_attempts_are_throttled (test_security.SecurityTests.test_login_attempts_are_throttled) ... ok
+test_login_csrf_is_rejected (test_security.SecurityTests.test_login_csrf_is_rejected) ... ok
+test_password_hashes_and_old_password_rejection (test_security.SecurityTests.test_password_hashes_and_old_password_rejection) ... ok
+test_reports_are_scoped_cached_and_limited (test_security.SecurityTests.test_reports_are_scoped_cached_and_limited) ... ok
+test_search_treats_sql_and_wildcards_as_data (test_security.SecurityTests.test_search_treats_sql_and_wildcards_as_data) ... ok
+test_session_rotation_secure_cookie_and_logout_invalidation (test_security.SecurityTests.test_session_rotation_secure_cookie_and_logout_invalidation) ... ok
+test_sql_injection_does_not_authenticate (test_security.SecurityTests.test_sql_injection_does_not_authenticate) ... ok
+test_stored_xss_is_output_encoded (test_security.SecurityTests.test_stored_xss_is_output_encoded) ... ok
+test_ticket_permissions_protect_reads_and_writes (test_security.SecurityTests.test_ticket_permissions_protect_reads_and_writes) ... ok
+test_unsigned_and_forged_sessions_are_rejected (test_security.SecurityTests.test_unsigned_and_forged_sessions_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 6.541s
+
+OK
