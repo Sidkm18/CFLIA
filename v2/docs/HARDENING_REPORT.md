@@ -23,9 +23,9 @@ The WAF is the official CRS container pinned to an immutable digest, using **Mod
 
 ## Validation evidence
 
-- [18 direct application tests](../output/origin-tests.txt) pass without the gateway/WAF. They cover both malicious requests and legitimate employee/admin use, including concurrent quota enforcement, session expiry, old-password rejection, session rotation and logout reuse.
-- [16 deployed-stack checks](../output/verification-20261015T051333Z/summary.md) pass through HTTPS, Nginx, ModSecurity and the application.
-- [Captured deployed results](../output/verification-20261015T051333Z/results.json) and [redacted request metadata](../output/verification-20261015T051333Z/requests.json) contain the observed outcomes. Passwords, cookie values and CSRF secrets are excluded.
+- [19 direct application tests](../output/origin-tests.txt) pass without the gateway/WAF. They cover both malicious requests and legitimate employee/admin use, including concurrent quota enforcement, session expiry, old-password rejection, session rotation and logout reuse.
+- [17 deployed-stack checks](../output/verification-20261015T070630Z/summary.md) pass through HTTPS, Nginx, ModSecurity and the application.
+- [Captured deployed results](../output/verification-20261015T070630Z/results.json) and [redacted request metadata](../output/verification-20261015T070630Z/requests.json) contain the observed outcomes. Passwords, cookie values and CSRF secrets are excluded.
 - [Runtime/image metadata](../output/runtime-versions.txt) records versions used for this run. [Idle resource observations](../output/idle-resources.txt) are separately labelled; they are not presented as measurements under load.
 - Gateway and WAF Nginx configuration checks pass; the installed Python dependencies pass `pip check`.
 
@@ -83,3 +83,9 @@ The referrer policy is `same-origin`. This preserves the Origin behaviour needed
 ## Handoff
 
 Use [the retest guide](RETEST_GUIDE.md) for the recording sequence and [v2's README](../README.md) for startup, local credentials, logs and shutdown commands. The final narrated seven-minute video and submission-formatted document have not been produced by this implementation step; the runnable secured application, test code and comparison evidence are available here.
+
+## Additional hardening review
+
+Anonymous sign-in sessions are now capped at 1,000 and expired/idle records are collected during session creation, including when browsers discard cookies. The insert and pruning transaction is serialized across workers. Active authenticated sessions are preserved by anonymous pruning. The gateway adds `Cache-Control: no-store` to WAF and rate-limit errors as well as normal application responses. A dependency audit of the eight pinned Python packages on 15 October 2026 found no known advisories; this is a point-in-time dependency check, not a complete vulnerability assessment.
+
+The later 17-check run linked above follows these additions. The earlier load comparison table is retained as its dated historical capture; the final submission report uses the fresh 15 October comparison.

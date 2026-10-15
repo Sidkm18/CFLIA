@@ -61,7 +61,7 @@ docker compose exec -T gateway nginx -t
 docker compose exec -T waf nginx -t
 ```
 
-The 18 direct application tests use temporary databases inside the v2 app container and bypass the WAF. They verify real root-cause fixes and normal employee/admin workflows. The integration script checks the full deployed stack, replays the original attack payloads where applicable, sends 40 bounded report requests with four workers and records redacted evidence under `output/verification-*/`. It creates one normal comment in v2 during its legitimate-use check. It never attacks, resets or writes to v1. Rate limits persist, so wait at least 60 seconds between full integration runs to begin with a fresh quota window.
+The 19 direct application tests use temporary databases inside the v2 app container and bypass the WAF. They verify real root-cause fixes and normal employee/admin workflows. The integration script checks the full deployed stack, replays the original attack payloads where applicable, sends 40 bounded report requests with four workers and records redacted evidence under `output/verification-*/`. It creates one normal comment in v2 during its legitimate-use check. It never attacks, resets or writes to v1. Rate limits persist, so wait at least 60 seconds between full integration runs to begin with a fresh quota window.
 
 The report probe uses the same count/concurrency as the captured v1 probe. The endpoints now enforce authentication/quota and use HTTPS; rejected responses and accepted reports are separate outcomes. The measured HTTP-response rate is not equivalent to report-generation throughput or proof of DDoS resistance. Local controls cannot absorb an upstream bandwidth-saturating attack.
 

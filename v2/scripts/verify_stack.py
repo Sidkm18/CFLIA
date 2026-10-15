@@ -129,6 +129,7 @@ def main():
             "median_latency_ms": round(statistics.median(latency), 2), "p95_latency_ms": latency[37],
             "limitation": "Same request count and concurrency as v1; includes TLS and rejected requests. Throughput is not accepted report throughput or proof of DDoS resistance."}
     check("V08 expensive requests throttled", statuses.get("429", 0) > 0 and statuses.get("200", 0) <= 6 and set(statuses) <= {"200", "429"}, json.dumps(load))
+    check("Edge errors disable caching", injected["headers"].get("Cache-Control") == "no-store" and all(r["headers"].get("Cache-Control") == "no-store" for r in results), "WAF blocks and gateway rate-limit responses include Cache-Control: no-store.")
     logout = call("/logout", "POST", {"csrf_token": token}, cookie, ORIGIN)
     reused = call("/account", cookie=cookie)
     check("Logout invalidates session", logout["status"] == 303 and reused["status"] == 401, "Old cookie no longer authenticates after logout.")

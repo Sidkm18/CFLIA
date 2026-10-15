@@ -142,6 +142,19 @@ class SecurityTests(unittest.TestCase):
             self.sql("UPDATE sessions SET " + column + "=? WHERE user_id=2", (time.time() - 7200,))
             self.assertEqual(self.get("/account").status_code, 401)
 
+    def test_abandoned_login_sessions_are_collected_and_bounded(self):
+        self.app.config["MAX_ANONYMOUS_SESSIONS"] = 5
+        now = time.time()
+        for index in range(8):
+            self.sql("INSERT INTO sessions VALUES(?,?,?,?,?,?)", (f"anonymous-{index}", None, "csrf", now-index, now+900, now))
+        for token, expires, seen in [("expired", now-1, now), ("idle", now+900, now-901)]:
+            self.sql("INSERT INTO sessions VALUES(?,?,?,?,?,?)", (token, None, "csrf", now, expires, seen))
+        self.sql("INSERT INTO sessions VALUES(?,?,?,?,?,?)", ("authenticated", 2, "csrf", now, now+3600, now))
+        self.assertEqual(self.get("/login").status_code, 200)
+        self.assertEqual(self.sql("SELECT count(*) FROM sessions WHERE user_id IS NULL")[0][0], 5)
+        self.assertEqual(self.sql("SELECT count(*) FROM sessions WHERE token_hash IN ('expired','idle')")[0][0], 0)
+        self.assertEqual(self.sql("SELECT count(*) FROM sessions WHERE token_hash='authenticated'")[0][0], 1)
+
     def test_csrf_token_and_origin_are_both_required(self):
         self.login()
         token = self.csrf()

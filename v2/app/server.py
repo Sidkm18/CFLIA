@@ -32,7 +32,7 @@ def create_app(test_config=None):
         ORIGINS=set(os.environ.get("PORTAL_ORIGINS", "https://127.0.0.1:8443,https://localhost:8443").split(",")),
         TRUSTED_HOSTS=["127.0.0.1", "localhost"],
         MAX_CONTENT_LENGTH=16384, MAX_FORM_MEMORY_SIZE=16384, MAX_FORM_PARTS=12,
-        SESSION_LIFETIME=3600, SESSION_IDLE=900,
+        SESSION_LIFETIME=3600, SESSION_IDLE=900, MAX_ANONYMOUS_SESSIONS=1000,
     )
     if test_config:
         app.config.update(test_config)
@@ -119,12 +119,17 @@ def create_app(test_config=None):
         token = secrets.token_urlsafe(32)
         token_hash = hashlib.sha256(token.encode()).hexdigest()
         with connect() as con:
+            # Bound abandoned pre-login sessions even when clients discard cookies.
+            # Serialize cleanup and insertion across workers to keep the cap exact.
+            con.execute("BEGIN IMMEDIATE")
+            con.execute("DELETE FROM sessions WHERE expires<=? OR last_seen<=?", (now, now - app.config["SESSION_IDLE"]))
             old = getattr(g, "session", None)
             if old:
                 con.execute("DELETE FROM sessions WHERE token_hash=?", (old["token_hash"],))
             con.execute("INSERT INTO sessions VALUES(?,?,?,?,?,?)", (
                 token_hash, user_id, secrets.token_urlsafe(32), now,
                 now + (app.config["SESSION_LIFETIME"] if user_id else 900), now))
+            con.execute("DELETE FROM sessions WHERE user_id IS NULL AND token_hash IN (SELECT token_hash FROM sessions WHERE user_id IS NULL ORDER BY created DESC, token_hash DESC LIMIT -1 OFFSET ?)", (app.config["MAX_ANONYMOUS_SESSIONS"],))
             if user_id:
                 con.execute("DELETE FROM sessions WHERE user_id=? AND token_hash NOT IN (SELECT token_hash FROM sessions WHERE user_id=? ORDER BY created DESC LIMIT 5)", (user_id, user_id))
             g.session = dict(con.execute("SELECT * FROM sessions WHERE token_hash=?", (token_hash,)).fetchone())
