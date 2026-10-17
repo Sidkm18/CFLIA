@@ -1,5 +1,42 @@
 # Render free demonstration deployments
 
+## Live services (verified 2026-10-17)
+
+| Version | Public URL | Render service |
+|---|---|---|
+| V1 intentionally vulnerable | https://legacydesk-v1-demo.onrender.com | `srv-db9ohtqjnfac73d2ekl0` |
+| V2 patched with WAF | https://legacydesk-v2-demo.onrender.com | `srv-db9oi73ncjis73a3m9r0` |
+
+Both services deployed commit `8330f02c79299a5a16f9cb63c7fc78d33415abf3`
+from branch `deploy/render-free-demos`, in separate Render projects, on Free
+compute in Singapore. Automatic deployment is disabled. The user explicitly
+approved publication of V1's intentional vulnerabilities and generation of
+V2's initial credentials in Render.
+
+V1 accepts its original fictional accounts, including `alice` / `alice123`.
+V2 uses three distinct 32-character passwords generated in Render. Retrieve
+them in the V2 service's **Environment** page; they are not in Git, image layers,
+logs or this document. Existing local credentials were not uploaded.
+
+**Hosted limitation:** Cloudflare blocks the standard SQL-injection login payload
+at its edge with HTTP 403 before it reaches V1. This is a platform mitigation;
+the unchanged V1 application is still vulnerable in the independently verified
+local container. Do not claim that this payload succeeds on the public URL.
+Render's public TLS and edge protections also differ from the local baseline.
+Keep the local stacks for a controlled demonstration of every original finding.
+
+Bounded live HTTP checks: **25 passed, one platform-filtered**. Browser checks
+confirmed successful sign-in on both versions, V1 access to Bob's ticket as
+Alice versus V2 denial, execution of the harmless stored XSS marker on V1,
+successful normal comments on V2, and rejection of the XSS comment on V2.
+Hosted V2 audit logs recorded CRS 4.30.0 rule IDs 941100, 941120, 941160 and
+949110. No hosted load test was performed. Detailed redacted evidence lives
+under the repository's local `output/render-deployment/` directory.
+
+`python3 deploy/render/verify_hosted.py` repeats the bounded HTTP checks. It
+does not need V2 passwords, saves no cookies/tokens or response bodies, and
+writes only a harmless V1 comment and a fictional account email update.
+
 These deployment overlays leave the original local V1 and V2 stacks unchanged.
 Use the repository root as the Docker build context and select
 `deploy/render/Dockerfile.v1` or `deploy/render/Dockerfile.v2` in two separate
@@ -47,8 +84,8 @@ References checked 2026-10-17:
 - https://render.com/docs/docker
 - https://render.com/docs/penetration-testing
 
-Deployment status and final URLs must be recorded only after Render confirms
-successful builds and live HTTP/browser checks pass.
+The live status and URLs above were recorded after Render reported successful
+deployments and direct HTTPS/browser checks completed.
 
 ## Local package verification
 
