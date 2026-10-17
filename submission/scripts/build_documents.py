@@ -129,8 +129,8 @@ actions=['Prepare /debug on both versions, captured headers, the two load result
 fixfiles='v2/infra/gateway.conf; v2/app/server.py finish, report and new_session')]
 
 class Writer:
-    def __init__(self,title):
-        self.doc=Document(); self.md=[]
+    def __init__(self,title,show_header=True):
+        self.doc=Document(); self.md=[]; self.show_header=show_header
         s=self.doc.sections[0]
         s.page_width=Inches(8.5);s.page_height=Inches(11)
         s.top_margin=s.bottom_margin=Inches(.65);s.left_margin=s.right_margin=Inches(.75)
@@ -147,7 +147,8 @@ class Writer:
         for root in [self.doc._element, styles.element]:
             for border in root.xpath('.//w:pBdr'):
                 border.getparent().remove(border)
-        h=s.header.paragraphs[0];h.text='CFLIA  |  LegacyDesk security project';h.style='Caption'
+        if show_header:
+            h=s.header.paragraphs[0];h.text='CFLIA  |  LegacyDesk security project';h.style='Caption'
         f=s.footer.paragraphs[0];f.alignment=WD_ALIGN_PARAGRAPH.RIGHT
         f.add_run('Page ')
         field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');f._p.append(field)
@@ -202,6 +203,13 @@ class Writer:
         if p.stem=='V07-before-http':
             # Legible excerpt through the first exposed account; the full capture stays in the pack.
             im=im.crop((0,0,im.width,735))
+        if not self.show_header and p.stem.endswith('-http'):
+            # Exclude the evidence viewer date strip and source footer from the report.
+            # The actual request/response area is preserved and source PNGs stay unchanged.
+            samples=range(50,im.width-50,25)
+            panel_rows=[y for y in range(im.height) if sum(im.getpixel((x,y))==(245,245,245) for x in samples)>20]
+            bottom=min(im.height,max(panel_rows)+3) if panel_rows else im.height
+            im=im.crop((0,54,im.width,bottom))
         derived=FIG/(p.stem+'-print.png');im.save(derived)
         width=min(7.0,maxheight*im.width/im.height)
         para=self.doc.add_paragraph();para.alignment=WD_ALIGN_PARAGRAPH.CENTER
@@ -245,116 +253,8 @@ def figures():
     im.save(FIG/'load-comparison.png')
 
 def report():
-    w=Writer('Web Application Attack Simulation and Layered Security Hardening')
-    w.p('WAF Rate Limiting and Defensive Controls','Subtitle')
-    w.p('Final technical report  |  Evidence captured 15 October 2026')
-    w.p('Project repository: https://github.com/Sidkm18/CFLIA  |  Private')
-    w.h('Purpose and result')
-    w.p('We tested eight weaknesses in LegacyDesk, an employee service portal, and implemented a separate hardened version under v2. All eight baseline weaknesses were observed. The final hardened stack passed 19 direct application tests and 17 integration checks. A repeated local load batch changed from 40 accepted requests to 5 accepted requests and 35 rate-limit responses.')
-    w.p('This report explains the causes, fixes, reproduction steps and recorded results. It distinguishes real browser captures from labelled HTTP evidence views and includes the supporting raw data. The website itself retains a normal employee-portal interface.')
-    w.h('Submission details')
-    w.p('College or institute: ______________________________\nSubject and course: ______________________________\nGuide or faculty: ______________________________\nTeam members and roll numbers: ______________________________')
-    w.h('Reading order')
-    w.p('The next pages describe scope, architecture, tools and measured results. Each of the eight case studies then has a baseline page and a hardening page. Browser evidence, verification limits, operations and references follow. A separate team pack provides the seven-minute speaking script and rehearsal plan.')
-    w.page('Objectives and scope')
-    for t in ['Design and deploy an intentionally vulnerable application in an isolated local environment.', 'Demonstrate injection, XSS, authorization, session, CSRF, traversal, configuration and resource-consumption weaknesses.', 'Identify the root cause of each weakness and implement application and infrastructure controls.', 'Repeat the attack scenarios and compare status codes, visible behavior, latency and logs.', 'Preserve ordinary employee workflows while showing how preventive and detective controls work together.']:
-        w.p(t,'List Number')
-    w.h('Environment and boundaries')
-    w.p('The measured environment is macOS with Docker Desktop, Python scripts, Nmap, OWASP ZAP, Wireshark tshark and Chromium browser automation. Kali Linux and Burp Suite were in the initial proposed tool list but are not claimed as tools used in these captures. ZAP provided the actual proxy request history.')
-    w.p('All target traffic used the self-hosted local stacks or their isolated Docker service names. No third-party target was scanned. The download exposure reaches only a seeded private fixture; the XSS proof changes one local page element. The load workload is capped at 40 requests and four workers.')
-    w.h('Interpretation of the legacy website')
-    w.p('V1 already uses Nginx as a reverse proxy. Its weaknesses are in intentionally unsafe application behavior and missing defensive controls. The project does not demonstrate an exploit against an old Nginx CVE, nor does an Nginx version banner establish exploitability. The original 51 tracked files remain byte-for-byte unchanged by SHA-256 comparison.')
-    w.h('OWASP mapping')
-    w.p('The case labels use OWASP Top 10 2025 terminology where applicable. Eight tested vulnerabilities do not represent eight different Top 10 categories. Resource consumption is explicitly mapped to OWASP API Security API4 2023. These categories guide analysis; OWASP does not automatically patch an application. [1] [8]')
-    w.page('System architecture and defensive layers')
-    w.image(FIG/'architecture.png','Figure 1  Deployed architecture derived from v2 Compose and gateway configuration',2.5)
-    w.table(['Layer','Implemented behavior'],[
-        ['Network','Separate Compose projects and database volumes; backend and WAF ports unpublished'],
-        ['Gateway','TLS 1.2 or 1.3; HTTP redirect; request and connection limits; body and timeout bounds'],
-        ['WAF','ModSecurity 3.0.17 with CRS 4.30.0 in blocking mode at paranoia level 1'],
-        ['Application','Bound SQL; output encoding; ownership checks; session and CSRF controls; fixed download allowlist'],
-        ['Resources','Per-user quotas; cached report; anonymous session cap and garbage collection; container and worker limits'],
-        ['Detection','Correlated gateway, WAF and application events; no stored live tokens in submitted evidence']],[1.25,5.75])
-    w.p('Preventive controls reject known attacks and enforce application policy. Detective controls record rule matches and access denials. The response demonstrated here is automatic rejection with 401, 403, 404 or 429 as appropriate; no SOC alerting or automated incident-response system is claimed.')
-    w.page('Test method and evidence provenance')
-    w.p('We followed attack, observation, hardening and retest. Baseline capture began at 06:54:46 UTC. The final full-stack retest began at 07:06:30 UTC after the additional session and cache-control changes. Each request series identifies its target and version.')
-    w.table(['Evidence','Location in the repository'],[
-        ['Baseline responses','output/evidence/baseline-20261015T065446247953Z/'],
-        ['Final full-stack checks','v2/output/verification-20261015T070630Z/'],
-        ['Redacted v2 response bodies','submission/evidence/v2-http-responses.json'],
-        ['Direct application tests','v2/output/origin-tests.txt'],
-        ['Browser and HTTP screenshots','output/playwright/final/ and v2/output/playwright/'],
-        ['Proxy and packet data','submission/evidence/zap-proxy-history.json and local-http.pcapng'],
-        ['Dependency audit','submission/evidence/dependency-audit.json']],[1.65,5.35])
-    w.p('Screenshots labelled recorded HTTP evidence are browser renders of real captured request and response fields. They are evidence viewers, not screenshots of a portal feature. Real portal screenshots are identified separately. V2 passwords, CSRF tokens and session values are redacted or excluded. The packet capture contains only port 8080 traffic and the intentionally weak seeded v1 values.')
-    w.p('Application-only tests use temporary databases and bypass the WAF, showing that root-cause fixes do not depend solely on request signatures. Deployed checks traverse TLS, Nginx, ModSecurity and Flask. Positive tests cover sign-in, authorized ticket access, comments, handbook downloads and logout.')
-    w.page('Enumeration and request interception')
-    w.image(CAP/'recon-nmap.png','Figure 2  Nmap output from a bounded scan of four localhost ports',3.0)
-    w.image(CAP/'zap-interception.png','Figure 3  Actual ZAP proxy history showing ticket ID modification with Alice identity',3.7)
-    w.p('ZAP ran temporarily in a separate container. Only two selected local requests were proxied, with no active scan or spider. Both returned HTTP 200 in v1; the modified request disclosed Bob payroll details. The container was stopped after exporting its request history.')
-    w.page('Network capture evidence')
-    w.image(CAP/'wireshark-packets.png','Figure 3 A  Wireshark tshark extraction from the recorded loopback capture',5.7)
-    w.p('The six-second capture recorded 132 packets on loopback with a capture filter for TCP port 8080. The displayed fields are frame number, relative time, source address, source port, HTTP method, request URI and response code. The PCAPNG file is included for inspection in Wireshark.')
-    w.p('The capture observes the original HTTP service only. It does not decrypt v2 TLS, quantify distributed traffic, or establish peak resource utilization. The original project uses deliberately weak seeded account values; no generated v2 credential is present in this port-filtered capture.')
-    w.page('Measured comparison')
-    w.image(FIG/'load-comparison.png','Figure 4  Accepted and rejected responses for the same bounded request schedule',2.7)
-    w.table(['Measure','Vulnerable v1','Hardened v2'],[
-        ['Requests and workers','40 and 4','40 and 4'],['HTTP 200','40','5'],['HTTP 429','0','35'],
-        ['Elapsed seconds',str(B['elapsed_seconds']),str(H['elapsed_seconds'])],
-        ['Median latency ms',str(B['median_latency_ms']),str(H['median_latency_ms'])],
-        ['p95 latency ms',str(B['p95_latency_ms']),str(H['p95_latency_ms'])]],[3,2,2])
-    w.p('V2 rejects excess work early and caches allowed reports. Its measurements include TLS and rejected requests, so lower latency does not mean equivalent successful work ran faster. These are individual local captures, not statistically repeated capacity estimates. Container limits are configured, but the included idle resource snapshot does not establish CPU or memory peaks during a flood.')
-    w.p('All eight baseline findings were observed. All 19 direct application tests and 17 final deployed-stack checks passed. WAF evidence includes SQLi rule 942100, XSS rules 941100, 941120 and 941160, path rules 930110 and 930120, and anomaly evaluation rule 949110. Exact results are retained in JSON.')
-    for case in CASES:
-        ident=case['id'];w.page(ident+' '+case['name']+' before hardening')
-        w.p('OWASP mapping: '+case['mapping'])
-        w.h('Cause and effect');w.p(case['cause']+' '+case['impact'])
-        w.h('Reproduction');w.p(case['steps']);w.code(case['payload'])
-        w.image(CAP/(ident+'-before-http.png'),f'Figure {ident} A  Recorded baseline HTTP evidence'+(' excerpt through the first account' if ident=='V07' else ''),4.25)
-        w.p(case['before'])
-        w.page(ident+' '+case['name']+' after hardening')
-        w.h('Implemented fix');w.p(case['fix']+' '+case['ref'])
-        w.code(case['code'])
-        w.image(CAP/(ident+'-after-http.png'),f'Figure {ident} B  Recorded response through the deployed hardened gateway',4.25)
-        w.p(case['after'])
-        w.h('Legitimate use');w.p(case['positive'])
-    for title,images in [
-        ('Browser evidence for injection and scripting',[(CAP/'V01-before-admin.png','Figure 5  V1 administrator identity after injected login'),(CAP/'V02-before-browser.png','Figure 6  V1 stored payload executed inside the ticket conversation')]),
-        ('Browser evidence for encoding and authorization',[(ROOT/'v2/output/playwright/v2-xss-encoded.png','Figure 7  V2 direct-origin payload displayed as encoded text'),(CAP/'V03-before-browser.png','Figure 8  V1 Alice session reading Bob ticket')]),
-        ('Browser evidence for forged requests',[(CAP/'V05-before-form.png','Figure 9  Separate-origin contact form before submission'),(CAP/'V05-before-account.png','Figure 10  V1 account after browser form submission')]),
-        ('Browser evidence for session forgery',[(CAP/'V04-before-denied.png','Figure 10 A  V1 administrator access denied to Alice'),(CAP/'V04-before-forged.png','Figure 10 B  V1 administrator access after changing the identity cookie')]),
-        ('Browser evidence for file and diagnostic exposure',[(CAP/'V06-before-browser.png','Figure 10 C  Private configuration fixture returned by v1 traversal'),(CAP/'V07-before-browser.png','Figure 10 D  Public v1 debug response with seeded accounts')]),
-        ('Browser evidence for normal workflows',[(ROOT/'v2/output/playwright/v2-ticket-created.png','Figure 11  Legitimate v2 ticket creation'),(ROOT/'v2/output/playwright/v2-mobile-ticket.png','Figure 12  V2 employee workflow at mobile width')])]:
-        w.page(title)
-        for image,caption in images:w.image(image,caption,3.8)
-    w.page('Verification limits and maintenance')
-    w.h('What the results establish')
-    w.p('The captured payloads succeed in v1 and are denied or rendered inert in v2. Origin tests demonstrate ownership checks, bound queries, encoding, session and CSRF enforcement independently of the WAF. Valid portal workflows remain available. Anonymous session cleanup and the cap now prevent indefinite accumulation when clients discard pre-login cookies.')
-    w.h('What remains outside the measured scope')
-    w.p('This is not an exhaustive penetration test or a claim that the application has no vulnerabilities. The bounded load probe does not establish distributed denial-of-service resistance, network saturation capacity, or behavior under many independent clients. WAF tuning, sustained performance tests, production identity services, alert delivery and backup recovery require separate evaluation.')
-    w.p('The dependency audit found no known advisories for the eight pinned Python packages at capture time. It does not cover every operating-system package or future advisory. Some container tags remain mutable; keep the captured runtime versions and review updates before reuse. Local certificates are appropriate to this localhost setup and require renewal; a public deployment needs a managed certificate and deployment-specific host/origin configuration.')
-    w.h('Repeat the verification')
-    w.code('docker compose -f v2/compose.yaml exec -T app \\\n  python -m unittest discover -s tests -v\npython3 v2/scripts/verify_stack.py')
-    w.p('Wait at least 60 seconds between integration batches so persisted quotas can reset. The integration script adds a clearly named ordinary proof comment. Remove only proof records created for the recording; never reset a database containing records you want to preserve. The vulnerable original remains available separately for the before sequence.')
-    w.h('Operational follow through')
-    w.p('Review dependency and image updates, renew TLS material, protect the private state directory, rotate credentials when sharing the environment, inspect denied requests, and add alert routing before any real service deployment. Keep generated credentials, TLS private keys and live browser session state out of Git and recordings.')
-    w.page('References and submitted files')
-    refs=[
-        ('[1] OWASP Top 10 2025','https://top10.owasp.org/'),
-        ('[2] SQL Injection Prevention Cheat Sheet','https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html'),
-        ('[3] Cross Site Scripting Prevention Cheat Sheet','https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html'),
-        ('[4] Insecure Direct Object Reference Prevention','https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html'),
-        ('[5] Session Management Cheat Sheet','https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html'),
-        ('[6] Cross Site Request Forgery Prevention','https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html'),
-        ('[7] Nginx request limiting module','https://nginx.org/en/docs/http/ngx_http_limit_req_module.html'),
-        ('[8] OWASP API4 2023 Resource Consumption','https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/'),
-        ('[9] OWASP Core Rule Set documentation','https://coreruleset.org/docs/'),
-        ('[10] ZAP Docker documentation','https://www.zaproxy.org/docs/docker/')]
-    for title,url in refs:w.p(title+'\n'+url)
-    w.p('References checked 15 October 2026. Implementation claims and measurements come from the repository and captured local evidence; the references supply the security concepts and control guidance.')
-    w.h('Deliverables')
-    w.p('Editable report and PDF: output/documents and output/pdf. Four-person speaking and rehearsal pack: the matching Team Script documents. Screenshot and silent walkthrough pack: output/playwright/final. Raw captures and comparison data: submission/evidence. Hardened source and verification commands: v2.')
-    w.save('CFLIA_Final_Report','FINAL_REPORT.md')
+    from report_content import build_report
+    build_report(Writer, ROOT, FIG, CAP)
 
 def team():
     w=Writer('Four Person Presentation Script and Rehearsal Guide')
@@ -394,5 +294,10 @@ def team():
     (ROOT/'submission/speaking_plan.json').write_text(json.dumps({'target_seconds':420,'spoken_word_count':count,'speakers':SPEAKERS},indent=2)+'\n')
 
 if __name__=='__main__':
-    figures(); report();team()
-    print('Created final report and four-person script DOCX with Markdown sources.')
+    import sys
+    if '--report-only' in sys.argv:
+        report()
+        print('Updated plain-language report and Markdown source.')
+    else:
+        figures(); report();team()
+        print('Created final report and four-person script DOCX with Markdown sources.')

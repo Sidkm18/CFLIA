@@ -4,7 +4,7 @@ The original portal remains at `http://127.0.0.1:8080`. The separate hardened po
 
 ## Read and present
 
-- [Final report PDF](../output/pdf/CFLIA_Final_Report.pdf) and [editable Word report](../output/documents/CFLIA_Final_Report.docx): 31 pages, eight attack/fix/retest cases, screenshots, architecture, measurements, tool evidence and limitations.
+- [Final report PDF](../output/pdf/CFLIA_Final_Report.pdf) and [editable Word report](../output/documents/CFLIA_Final_Report.docx): Plain-language explanations grouped into what we found and how we fixed it, with screenshots, website context, architecture and defensive layers.
 - [Team script PDF](../output/pdf/CFLIA_Team_Script.pdf) and [editable Word script](../output/documents/CFLIA_Team_Script.docx): nine pages, four speakers, two vulnerabilities each, seven-minute timing, narration, screen actions, payloads and rehearsal checklist.
 - [Report Markdown](FINAL_REPORT.md) and [script Markdown](TEAM_SCRIPT.md) provide searchable text and relative image links.
 - [All final captures](../output/playwright/final/) include 16 paired HTTP evidence screenshots, actual browser screenshots, Nmap/ZAP/tshark views and a silent evidence walkthrough. The walkthrough is source footage, not a finished narrated team video.
@@ -16,7 +16,7 @@ The original portal remains at `http://127.0.0.1:8080`. The separate hardened po
 | Member 3 | 03:30–05:15 | CSRF and path traversal |
 | Member 4 | 05:15–07:00 | Misconfiguration and resource consumption |
 
-College, faculty and member names are blank because they were not supplied. Add them before academic submission.
+The report contains a team table with Siddharth Kamat and the supplied roll number filled in. The remaining team names and roll numbers are blank for completion.
 
 ## Verification
 
@@ -31,7 +31,7 @@ The final security capture is dated **15 October 2026**. All eight v1 findings w
 - [Wireshark capture](evidence/local-http.pcapng) and [HTTP packet fields](evidence/wireshark-http-summary.tsv)
 - [Dependency audit](evidence/dependency-audit.json): no known advisories in the eight pinned Python packages at capture time.
 
-The HTTP evidence pages render selected fields from real captures and identify their sources. They are not application UI screenshots. The full v1 debug capture is preserved; the report uses a cropped excerpt to keep the first exposed account readable. Live v2 secrets are redacted or excluded.
+The HTTP evidence pages render selected fields from real captures and identify their sources. They are not application UI screenshots. The full screenshots are preserved. The simplified report uses request/response excerpts without the viewer date strip or source footer, and a cropped debug excerpt keeps the first exposed account readable. Live v2 secrets are redacted or excluded.
 
 ## Run again
 
@@ -51,4 +51,4 @@ Passwords are generated locally in ignored `v2/state/credentials.json`; TLS priv
 
 ## Rebuild documents
 
-`scripts/build_documents.py` builds both Word files and their Markdown sources from the saved evidence. It requires Python with python-docx, Pillow and the Arial font used on this Mac. The submitted PDF exports were rendered and visually reviewed. The repository includes the final exports so rebuilding is optional.
+`scripts/build_documents.py` builds both Word files and their Markdown sources from the saved evidence. Use `--report-only` to rebuild the simplified report without changing the team script. The report wording lives in `scripts/report_content.py`. It requires Python with python-docx, Pillow and the Arial font used on this Mac. The submitted PDF exports were rendered and visually reviewed. The repository includes the final exports so rebuilding is optional.

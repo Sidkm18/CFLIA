@@ -1,12 +1,12 @@
 {
-  "visual_review": "All rendered pages inspected; no clipping, overlaps or orphan pages remain.",
+  "visual_review": "All pages of the simplified report rendered and visually inspected. Explanations and screenshots fit without clipping, overlaps or orphan pages. The team script is unchanged.",
   "documents": [
     {
       "name": "CFLIA_Final_Report",
-      "pages": 31,
-      "embedded_images": 33,
-      "pdf_sha256": "3d6e1a9c9fbd09cdd027f73993605d4b9f76920faa34343f1fcb7451b7d9c062",
-      "docx_sha256": "2cbc5313340189469df5f88ff485dca95762911c6b1cabccdfa56a18f62b9900"
+      "pages": 20,
+      "embedded_images": 28,
+      "pdf_sha256": "a7c6a0c49ded71d3218b770e6e95397fd36a26d68376333eb0999ee1c5141f71",
+      "docx_sha256": "bda7ac4b5b78a7812cd214c9fd56741295321364c662a662b7508f555af50547"
     },
     {
       "name": "CFLIA_Team_Script",
