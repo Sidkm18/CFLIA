@@ -1,0 +1,22 @@
+<!doctype html><meta charset="utf-8"><title>V08 before evidence</title><style>
+        *{box-sizing:border-box}body{margin:0;padding:30px 38px;background:#fff;color:#171717;font:19px Arial,sans-serif}
+        .meta{font-size:16px;color:#444}h1{font-size:30px;margin:18px 0 10px}h2{font-size:20px;margin:18px 0 10px}
+        pre{font:16px/1.42 Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:16px;background:#f5f5f5;border:1px solid #ddd}
+        .status{font-size:27px;font-weight:700}footer{margin-top:18px;font-size:14px;color:#444}
+        </style><div class="meta">RECORDED HTTP EVIDENCE / BEFORE HARDENING / 15 OCTOBER 2026 UTC</div>
+        <h1>V08 Unrestricted expensive requests</h1><p>http://127.0.0.1:8080 &nbsp; <span class="status">40 requests / 4 workers</span></p>
+        <h2>Request</h2><pre>GET /reports/export
+Authenticated Alice session
+Bounded local request batch</pre><h2>Observed response</h2><pre>{
+  &quot;requests&quot;: 40,
+  &quot;concurrency&quot;: 4,
+  &quot;elapsed_seconds&quot;: 2.055,
+  &quot;throughput_rps&quot;: 19.46,
+  &quot;status_counts&quot;: {
+    &quot;200&quot;: 40
+  },
+  &quot;median_latency_ms&quot;: 204.69,
+  &quot;p95_latency_ms&quot;: 207.64,
+  &quot;limitation&quot;: &quot;Bounded local probe demonstrates missing admission controls; does not establish DoS, DDoS resistance or system resource consumption.&quot;
+}</pre>
+        <footer>Source: output/evidence/baseline-20261015T065446247953Z/results.json<br>Selected fields from real requests. Live v2 credentials and tokens are redacted. This is an evidence viewer, not the application interface.</footer>

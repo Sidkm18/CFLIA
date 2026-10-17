@@ -1,0 +1,20 @@
+{
+  "visual_review": "All rendered pages inspected; no clipping, overlaps or orphan pages remain.",
+  "documents": [
+    {
+      "name": "CFLIA_Final_Report",
+      "pages": 31,
+      "embedded_images": 33,
+      "pdf_sha256": "3d6e1a9c9fbd09cdd027f73993605d4b9f76920faa34343f1fcb7451b7d9c062",
+      "docx_sha256": "2cbc5313340189469df5f88ff485dca95762911c6b1cabccdfa56a18f62b9900"
+    },
+    {
+      "name": "CFLIA_Team_Script",
+      "pages": 9,
+      "embedded_images": 0,
+      "pdf_sha256": "b2408a0f4b4b88646fbad8ed6b7414411c1dd425a6361204713f670c57eb0449",
+      "docx_sha256": "b0515fbcc48db1b648319ce2ff88053ee1950de4bc1fbd8c40c09ae36b58d7ef"
+    }
+  ],
+  "original_files_preserved": 51
+}

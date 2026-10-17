@@ -1,0 +1,67 @@
+{
+  "recorded_at_utc": "2026-10-15T06:54:46.247953+00:00",
+  "stage": "vulnerable",
+  "target": "http://127.0.0.1:8080",
+  "findings": [
+    {
+      "id": "V01",
+      "title": "SQL injection",
+      "baseline_failure_observed": true,
+      "detail": "Injected sign-in selects the admin account without its password."
+    },
+    {
+      "id": "V02",
+      "title": "Stored XSS",
+      "baseline_failure_observed": true,
+      "detail": "Harmless SVG payload stored and returned as raw markup. Browser execution requires separate visual verification."
+    },
+    {
+      "id": "V03",
+      "title": "Broken access control (IDOR)",
+      "baseline_failure_observed": true,
+      "detail": "Alice can read Bob's confidential fictional ticket by changing its ID."
+    },
+    {
+      "id": "V04",
+      "title": "Weak authentication / forged session",
+      "baseline_failure_observed": true,
+      "detail": "Alice is denied; an unsigned identity cookie grants administrator access without credentials."
+    },
+    {
+      "id": "V05",
+      "title": "CSRF",
+      "baseline_failure_observed": true,
+      "detail": "Cross-origin POST with the session cookie updates email without a token. Browser cookie behaviour must be verified separately."
+    },
+    {
+      "id": "V06",
+      "title": "Path traversal",
+      "baseline_failure_observed": true,
+      "detail": "Download escapes its public directory into a private dummy fixture."
+    },
+    {
+      "id": "V07",
+      "title": "Security misconfiguration",
+      "baseline_failure_observed": true,
+      "detail": "Public debug leaks fictional plaintext passwords; missing headers: content-security-policy, x-content-type-options, x-frame-options"
+    },
+    {
+      "id": "V08",
+      "title": "Unrestricted expensive requests",
+      "baseline_failure_observed": true,
+      "detail": "All 40 expensive authenticated requests accepted using four workers; no rate-limit response."
+    }
+  ],
+  "load_probe": {
+    "requests": 40,
+    "concurrency": 4,
+    "elapsed_seconds": 2.055,
+    "throughput_rps": 19.46,
+    "status_counts": {
+      "200": 40
+    },
+    "median_latency_ms": 204.69,
+    "p95_latency_ms": 207.64,
+    "limitation": "Bounded local probe demonstrates missing admission controls; does not establish DoS, DDoS resistance or system resource consumption."
+  }
+}
