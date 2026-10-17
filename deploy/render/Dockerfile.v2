@@ -1,0 +1,23 @@
+FROM ghcr.io/coreruleset/modsecurity-crs:nginx@sha256:133267aa811e1a57a23b52ef04b3c30e802bcbe5454588f6d6af1f69f4b2b667
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends python3 python3-venv \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m venv /opt/portal-python
+COPY v2/requirements.txt /tmp/portal-requirements.txt
+RUN /opt/portal-python/bin/pip install --no-cache-dir -r /tmp/portal-requirements.txt
+WORKDIR /srv/legacydesk
+COPY v2/app app
+COPY deploy/render/render_wsgi.py .
+COPY deploy/render/supervise.py /opt/render-lab/supervise.py
+COPY deploy/render/nginx-v2.conf.template /etc/nginx/templates/conf.d/default.conf.template
+RUN mkdir -p /srv/legacydesk/state && chown nginx:nginx /srv/legacydesk/state
+USER nginx
+ENV PATH=/opt/portal-python/bin:$PATH LAB_VERSION=2 PORT=10000 \
+    PORTAL_STATE=/srv/legacydesk/state PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 \
+    BACKEND=http://127.0.0.1:8000 MODSEC_RULE_ENGINE=On \
+    MODSEC_AUDIT_ENGINE=RelevantOnly MODSEC_AUDIT_LOG=/dev/stdout \
+    MODSEC_AUDIT_LOG_FORMAT=Native MODSEC_AUDIT_LOG_PARTS=AHZ \
+    BLOCKING_PARANOIA=1 DETECTION_PARANOIA=1 NGINX_WORKER_PROCESSES=1
+EXPOSE 10000
+ENTRYPOINT []
+CMD ["python", "/opt/render-lab/supervise.py"]
