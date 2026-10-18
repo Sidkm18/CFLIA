@@ -15,12 +15,15 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
+import challenge
+
 ROOT = Path(__file__).resolve().parent
 STATE = ROOT.parent / "state"
 DB = STATE / "legacydesk.sqlite3"
 LOG = STATE / "requests.jsonl"
 LOG_LOCK = threading.Lock()
 FIXTURES = ROOT / "fixtures"
+CHALLENGE_ENABLED = os.environ.get("V1_CHALLENGE_ENABLED") == "1"
 
 
 def connect():
@@ -109,6 +112,8 @@ class Handler(BaseHTTPRequestHandler):
     def page(self, title, content, active="overview", user=None):
         nav = [("overview", "/", "◫", "Overview"), ("tickets", "/tickets", "▤", "Support tickets"),
                ("knowledge", "/knowledge", "◇", "Knowledge base"), ("account", "/account", "◎", "My account")]
+        if CHALLENGE_ENABLED:
+            nav.append(("challenge", "/challenge", "⚑", "Unlock flag"))
         links = "".join(f'<a class="nav-link {"active" if key == active else ""}" href="{url}"><span>{icon}</span>{label}</a>' for key, url, icon, label in nav)
         identity = f'<span class="avatar">{esc(user["name"][0])}</span><div><strong>{esc(user["name"])}</strong><small>{esc(user["role"].title())}</small></div>' if user else '<span class="avatar">?</span><div><strong>Guest visitor</strong><small>Employee portal</small></div>'
         return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)} · LegacyDesk</title><link rel="stylesheet" href="/static/style.css"></head><body>
@@ -130,6 +135,9 @@ class Handler(BaseHTTPRequestHandler):
         user = self.user()
         if path == "/health":
             return self.send(json.dumps({"status": "ok", "service": "LegacyDesk"}), content_type="application/json")
+        if path == "/challenge" and CHALLENGE_ENABLED:
+            return self.send(self.page("Flag vault", challenge.content(), "challenge", user),
+                             headers={"Cache-Control": "no-store"})
         if path == "/static/style.css":
             return self.send((ROOT / "static/style.css").read_bytes(), content_type="text/css")
         if path == "/favicon.ico":
@@ -142,14 +150,20 @@ class Handler(BaseHTTPRequestHandler):
         if path == "/debug":
             with connect() as con:
                 users = [dict(x) for x in con.execute("SELECT * FROM users")]
-            return self.send(json.dumps({"database": str(DB), "debug": True, "session": "unsigned user_id cookie", "users": users}, indent=2), content_type="application/json")
+            debug = {"database": str(DB), "debug": True, "session": "unsigned user_id cookie", "users": users}
+            if CHALLENGE_ENABLED:
+                debug["recovered_passphrase"] = challenge.PASSPHRASES["debug"]
+            return self.send(json.dumps(debug, indent=2), content_type="application/json")
         if path == "/download":
             # V06: relative parent path escapes downloads. The fixtures root is
             # a lab containment boundary, not a fix for the download flaw.
             target = (FIXTURES / "downloads" / query.get("file", ["employee-handbook.txt"])[0]).resolve()
             if FIXTURES.resolve() not in target.parents or not target.is_file():
                 return self.send("File not found", 404, "text/plain")
-            return self.send(target.read_bytes(), content_type="text/plain; charset=utf-8")
+            body = target.read_bytes()
+            if CHALLENGE_ENABLED and target == (FIXTURES / "private/legacy-config.txt").resolve():
+                body += ("\nRECOVERED_PASSPHRASE=" + challenge.PASSPHRASES["traversal"] + "\n").encode()
+            return self.send(body, content_type="text/plain; charset=utf-8")
         if not user:
             return self.redirect("/login")
         if path == "/":
@@ -177,6 +191,8 @@ class Handler(BaseHTTPRequestHandler):
                 comments = con.execute("SELECT * FROM comments WHERE ticket_id=? ORDER BY id", (ticket["id"],)).fetchall()
             # V02: stored user content inserted raw into HTML.
             conversation = "".join(f'<article class="comment"><span class="avatar">{esc(c["author"][0])}</span><div><strong>{esc(c["author"])}</strong><div class="comment-body">{c["body"]}</div></div></article>' for c in comments)
+            if CHALLENGE_ENABLED and ticket["id"] == 1002:
+                conversation = challenge.reveal("ticket") + conversation
             content = f'''<a class="text-link" href="/tickets">← All tickets</a><div class="page-heading"><p class="eyebrow">REQUEST #{ticket['id']} / {esc(ticket['category'])}</p><h1>{esc(ticket['subject'])}</h1><p>Requested by {esc(ticket['owner'])} <span class="pill">{esc(ticket['status'])}</span></p></div><div class="detail-grid"><section class="panel"><h2>Request details</h2><p class="ticket-body">{esc(ticket['body'])}</p><hr><h2>Conversation</h2>{conversation}<form method="post" action="/comment"><input type="hidden" name="ticket_id" value="{ticket['id']}"><label>Add a comment<textarea rows="3" name="body" required placeholder="Write an update for the service desk."></textarea></label><button class="button">Post comment ↗</button></form></section><aside class="panel request-aside"><p class="eyebrow">REQUEST SUMMARY</p><dl><dt>Ticket ID</dt><dd>#{ticket['id']}</dd><dt>Owner</dt><dd>{esc(ticket['owner'])}</dd><dt>Category</dt><dd>{esc(ticket['category'])}</dd><dt>Status</dt><dd>{esc(ticket['status'])}</dd></dl></aside></div>'''
             return self.send(self.page("Ticket details", content, "tickets", user))
         if path == "/account":
@@ -197,7 +213,8 @@ class Handler(BaseHTTPRequestHandler):
                 return self.send("Administrator access required", 403, "text/plain")
             with connect() as con:
                 count = con.execute("SELECT count(*) FROM users").fetchone()[0]
-            return self.send(self.page("Administration", f'<div class="page-heading"><p class="eyebrow">ADMINISTRATOR ACCESS</p><h1>Administration</h1><p>Manage the employee directory and portal settings.</p></div><section class="panel"><h2>Directory overview</h2><p>{count} accounts are registered.</p></section>', user=user))
+            recovered = challenge.reveal("admin") if CHALLENGE_ENABLED else ""
+            return self.send(self.page("Administration", f'<div class="page-heading"><p class="eyebrow">ADMINISTRATOR ACCESS</p><h1>Administration</h1><p>Manage the employee directory and portal settings.</p></div><section class="panel"><h2>Directory overview</h2><p>{count} accounts are registered.</p>{recovered}</section>', user=user))
         self.send(self.page("Not found", '<div class="page-heading"><h1>Page not found</h1><p><a href="/">Return to the workspace</a></p></div>', user=user), 404)
 
     def ticket_table(self, tickets):
@@ -219,6 +236,9 @@ class Handler(BaseHTTPRequestHandler):
         data = parse_qs(self.rfile.read(length).decode(), keep_blank_values=True)
         get = lambda name: data.get(name, [""])[0]
         path = urlsplit(self.path).path
+        if path == "/challenge" and CHALLENGE_ENABLED:
+            return self.send(self.page("Flag vault", challenge.content(data), "challenge", self.user()),
+                             headers={"Cache-Control": "no-store"})
         if path == "/login":
             # V01: deliberately concatenate credentials into executable SQL.
             sql = "SELECT * FROM users WHERE username='" + get("username") + "' AND password='" + get("password") + "'"

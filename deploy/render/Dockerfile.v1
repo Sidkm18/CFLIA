@@ -7,6 +7,6 @@ COPY app /lab/app
 COPY deploy/render/supervise.py deploy/render/nginx-v1.conf /opt/render-lab/
 RUN mkdir -p /lab/state /tmp/nginx-body && chown -R lab:lab /lab/state /tmp/nginx-body
 USER lab
-ENV LAB_VERSION=1 LAB_BIND=127.0.0.1 LAB_PORT=8000 PORT=10000 PYTHONUNBUFFERED=1
+ENV LAB_VERSION=1 LAB_BIND=127.0.0.1 LAB_PORT=8000 PORT=10000 PYTHONUNBUFFERED=1 V1_CHALLENGE_ENABLED=1
 EXPOSE 10000
 CMD ["python", "/opt/render-lab/supervise.py"]
