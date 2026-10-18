@@ -1,0 +1,20 @@
+# Local environments and application state
+.venv/
+__pycache__/
+*.py[cod]
+state/
+.env
+.env.*
+!.env.example
+
+# Generated files
+/output/
+/v2/output/
+/tmp/
+.playwright-cli/
+
+# Editor and operating-system files
+.DS_Store
+~$*
+*.swp
+*.swo
