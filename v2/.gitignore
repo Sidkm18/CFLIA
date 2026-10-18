@@ -1,0 +1,8 @@
+state/
+.env
+.venv/
+__pycache__/
+*.pyc
+.playwright-cli/
+output/playwright/*.yml
+output/playwright/*.log

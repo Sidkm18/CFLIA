@@ -1,0 +1,5 @@
+LegacyDesk internal configuration
+DB_USER=legacy_admin
+DB_PASSWORD=legacy-db-password
+SESSION_SIGNING=disabled
+MAINTENANCE_NOTE=This file belongs outside the public downloads directory.

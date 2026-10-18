@@ -1,0 +1,46 @@
+name: legacydesk-lab
+services:
+  app:
+    build: .
+    volumes:
+      - lab-data:/lab/state
+    networks: [lab]
+    mem_limit: 256m
+    cpus: 1.0
+    pids_limit: 128
+    restart: "no"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 10
+      start_period: 2s
+  nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - ./infra/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      app:
+        condition: service_healthy
+    networks: [lab, edge]
+    mem_limit: 128m
+    restart: "no"
+  csrf-demo:
+    image: python:3.12-slim
+    command: ["python", "-m", "http.server", "8091", "--bind", "0.0.0.0", "--directory", "/demo"]
+    volumes:
+      - ./demos:/demo:ro
+    ports:
+      - "127.0.0.1:8091:8091"
+    networks: [edge]
+    mem_limit: 64m
+    restart: "no"
+networks:
+  lab:
+    internal: true
+  edge:
+    driver: bridge
+volumes:
+  lab-data:
