@@ -1,5 +1,17 @@
 # External CSRF form on Render
 
+Live site: https://legacydesk-csrf-demo.onrender.com
+
+Render Static Site: `srv-dbabemgm7kps73872ltg`. The downloadable `guide.pdf`
+is the reviewed five-page Render-only recording guide. Its source is
+`submission/RENDER_ONLY_DEMONSTRATION_GUIDE.md`.
+
+Browser rehearsal on 18 October 2026 confirmed V1 saved the externally
+submitted fictional email. V2 displayed Access unavailable, and the original
+authenticated account tab retained its earlier email after refresh. Screenshots
+are recorded under `output/render-deployment/csrf-*`. The browser cookie layer
+and server-side controls are a combined result, not an isolated token test.
+
 Deploy this directory as a free Render Static Site on the existing deployment
 branch. Build command: `true`. Publish directory: `deploy/render/demo-site`.
 The site must have its own hostname, distinct from both portal origins.

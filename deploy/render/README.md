@@ -1,5 +1,18 @@
 # Render free demonstration deployments
 
+## Current Render-only recording (2026-10-18)
+
+Use [the Render-only guide](../../submission/RENDER_ONLY_DEMONSTRATION_GUIDE.md)
+for the current browser-only presentation. The separate external form and
+downloadable guide are at https://legacydesk-csrf-demo.onrender.com. Its Render
+static-site ID is `srv-dbabemgm7kps73872ltg`; it deploys independently of the two
+portal services. V1 accepted its external account-update form in a browser;
+V2 rejected the form and retained its existing account email after refresh.
+
+The user excluded V08 entirely. This presentation covers V02-V07; V01 remains
+a previously platform-filtered observation. Historical local instructions and
+results below are not part of this Render-only recording.
+
 ## Live services (verified 2026-10-17)
 
 | Version | Public URL | Render service |
