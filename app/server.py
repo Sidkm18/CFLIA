@@ -1,4 +1,4 @@
-"""Intentionally vulnerable local training app.
+"""Intentionally vulnerable local training app. V01–V08 are documented in docs/.
 
 Standard library only. Never contains real data. The download flaw is constrained
 to fixtures so its demonstration cannot read the host filesystem.

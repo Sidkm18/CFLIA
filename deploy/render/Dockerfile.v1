@@ -1,0 +1,12 @@
+FROM python:3.12-slim
+RUN apt-get update && apt-get install -y --no-install-recommends nginx \
+    && rm -rf /var/lib/apt/lists/* \
+    && useradd --uid 10001 --create-home lab
+WORKDIR /lab
+COPY app /lab/app
+COPY deploy/render/supervise.py deploy/render/nginx-v1.conf /opt/render-lab/
+RUN mkdir -p /lab/state /tmp/nginx-body && chown -R lab:lab /lab/state /tmp/nginx-body
+USER lab
+ENV LAB_VERSION=1 LAB_BIND=127.0.0.1 LAB_PORT=8000 PORT=10000 PYTHONUNBUFFERED=1
+EXPOSE 10000
+CMD ["python", "/opt/render-lab/supervise.py"]

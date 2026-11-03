@@ -3,6 +3,7 @@ WORKDIR /srv/legacydesk
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt && useradd --uid 10001 --create-home portal && mkdir -p state && chown portal:portal state
 COPY app app
+COPY tests tests
 USER portal
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PORTAL_STATE=/srv/legacydesk/state
 EXPOSE 8000

@@ -1,0 +1,97 @@
+name: legacydesk-v08-capacity
+services:
+  v1:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    command: [python, -u, /demo/v1_server.py]
+    ports: ["127.0.0.1:18080:8000"]
+    volumes:
+      - ./v1_server.py:/demo/v1_server.py:ro
+      - v1-data:/lab/state
+    networks: [lab, edge]
+    mem_limit: 192m
+    cpus: 0.5
+    pids_limit: 32
+    restart: "no"
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 3
+  app:
+    build: ../../v2
+    command: [gunicorn, --bind=0.0.0.0:8000, --workers=1, --threads=2, --backlog=16, --timeout=15, --graceful-timeout=5, --umask=0o077, --no-control-socket, --preload, v08_wsgi:app]
+    env_file: ../../v2/.env
+    environment:
+      PORTAL_ORIGINS: https://127.0.0.1:18443,https://localhost:18443
+      PYTHONPATH: /demo:/srv/legacydesk
+    volumes:
+      - ./v2_wsgi.py:/demo/v08_wsgi.py:ro
+      - v2-data:/srv/legacydesk/state
+    networks: [origin]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 32
+    restart: "no"
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health',timeout=2)"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  waf:
+    image: ghcr.io/coreruleset/modsecurity-crs:nginx@sha256:133267aa811e1a57a23b52ef04b3c30e802bcbe5454588f6d6af1f69f4b2b667
+    environment:
+      BACKEND: http://app:8000
+      PORT: "8080"
+      MODSEC_RULE_ENGINE: "On"
+      MODSEC_AUDIT_ENGINE: RelevantOnly
+      MODSEC_AUDIT_LOG: /dev/stdout
+      MODSEC_AUDIT_LOG_FORMAT: Native
+      MODSEC_AUDIT_LOG_PARTS: AHZ
+      BLOCKING_PARANOIA: "1"
+      DETECTION_PARANOIA: "1"
+      NGINX_X_FORWARDED_PROTO: https
+      NGINX_X_FORWARDED_PORT: "18443"
+      PROXY_HOST_HEADER: $$http_host
+      NGINX_WORKER_PROCESSES: "1"
+    depends_on:
+      app:
+        condition: service_healthy
+    networks: [origin, filtering]
+    mem_limit: 256m
+    cpus: 0.5
+    pids_limit: 64
+    security_opt: [no-new-privileges:true]
+    restart: "no"
+  gateway:
+    image: nginx:stable-alpine
+    ports: ["127.0.0.1:18443:443"]
+    volumes:
+      - ./gateway.conf:/etc/nginx/conf.d/default.conf:ro
+      - ../../v2/infra/proxy_params_portal:/etc/nginx/proxy_params_portal:ro
+      - ../../v2/state/tls/server.crt:/etc/nginx/tls/server.crt:ro
+      - ../../v2/state/tls/server.key:/etc/nginx/tls/server.key:ro
+    depends_on: [waf]
+    networks: [filtering, edge]
+    mem_limit: 64m
+    cpus: 0.25
+    pids_limit: 32
+    security_opt: [no-new-privileges:true]
+    restart: "no"
+networks:
+  lab:
+    internal: true
+  origin:
+    internal: true
+  filtering:
+    internal: true
+  edge:
+    driver: bridge
+volumes:
+  v1-data:
+  v2-data:
