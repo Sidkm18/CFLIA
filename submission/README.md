@@ -8,7 +8,7 @@ The original portal remains at `http://127.0.0.1:8080`. The separate hardened po
 
 - [Final report PDF](../output/pdf/CFLIA_Final_Report.pdf) and [editable Word report](../output/documents/CFLIA_Final_Report.docx): Plain-language explanations grouped into what we found and how we fixed it, with screenshots, website context, architecture and defensive layers.
 - [Team script PDF](../output/pdf/CFLIA_Team_Script.pdf) and [editable Word script](../output/documents/CFLIA_Team_Script.docx): nine pages, four speakers, two vulnerabilities each, seven-minute timing, narration, screen actions, payloads and rehearsal checklist.
-- [Demonstration guide PDF](../output/pdf/CFLIA_Demonstration_Guide.pdf) and [editable guide](DEMONSTRATION_GUIDE.md): six pages of exact recording actions, expected results, local/Render differences, evidence references and troubleshooting. Use the local lab for the complete SQLi and resource-consumption scenes.
+- [Demonstration guide](DEMONSTRATION_GUIDE.md): exact recording actions, expected results, local/Render differences, evidence references and troubleshooting. Use the local lab for the complete SQLi and resource-consumption scenes.
 - [Report Markdown](FINAL_REPORT.md) and [script Markdown](TEAM_SCRIPT.md) provide searchable text and relative image links.
 - [All final captures](../output/playwright/final/) include 16 paired HTTP evidence screenshots, actual browser screenshots, Nmap/ZAP/tshark views and a silent evidence walkthrough. The walkthrough is source footage, not a finished narrated team video.
 

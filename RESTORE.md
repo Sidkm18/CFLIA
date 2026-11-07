@@ -39,10 +39,21 @@ The integration verifier writes a normal comment and sends a bounded request bat
 | `demos/`, `scripts/`, `docs/` | Demonstration code, evidence collectors and technical documentation |
 | `submission/` | Report/script Markdown, recording guides, document builders and supporting evidence |
 | `output/documents/`, `output/pdf/` | Recovered Word/PDF report exports and team script |
-| `output/`, `v2/output/` | Saved screenshots, HTTP results, runtime metadata and baseline ZIP |
-| `submission/archive-qa/` | Previously saved report edit audit and visual QA records |
+| `output/`, `v2/output/` | Saved screenshots, HTTP results, runtime metadata |
 
-The main and editable report exports were recovered byte-for-byte from `tmp/report-screenshots-20261018T150134253075Z/`, the latest complete report backup found. The team-script exports were recovered from local Git history. The Word/PDF files are archived without changes. The saved QA records describe the earlier document work, not a new visual review. Their recorded DOCX hashes differ from the recovered files, so those records are historical context rather than integrity verification of these exports. The recovered files match their temporary-folder sources exactly; use `ARCHIVE_SHA256SUMS` to verify the archived bytes. Some older text guides describe earlier revisions; use the included exports for the archived report layout.
+The main and editable report exports were recovered byte-for-byte from `tmp/report-screenshots-20261018T150134253075Z/`, the latest complete report backup found. The team-script exports were recovered from local Git history. The Word/PDF files are archived without changes. Use `ARCHIVE_SHA256SUMS` to verify the archived bytes. Some older text guides describe earlier revisions; use the included exports for the archived report layout.
+
+## Full historical backup
+
+The cleaned main branch retains the source, final documents and referenced evidence. Repeated test captures, the duplicate baseline source ZIP and historical report QA records remain available in [archive/full-backup-2026-11-07](https://github.com/Sidkm18/CFLIA/tree/archive/full-backup-2026-11-07).
+
+To extract the original vulnerable-stage ZIP from that backup:
+
+```sh
+git show archive/full-backup-2026-11-07:output/legacydesk-vulnerable-baseline.zip > ../legacydesk-vulnerable-baseline.zip
+```
+
+Separate local-main, Render-demo and passphrase-challenge histories are also preserved under the repository's `archive/` tags.
 
 ## Documents and hosting
 

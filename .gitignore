@@ -7,11 +7,9 @@ state/
 .env.*
 !.env.example
 
-# Generated files
 # Archived evidence is tracked; new runtime captures stay local.
-/output/*
-/v2# Archived evidence is tracked; new runtime captures stay local.
-/output/*
+/output/
+/v2/output/
 /tmp/
 .playwright-cli/
 
