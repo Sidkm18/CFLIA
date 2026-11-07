@@ -1,0 +1,4 @@
+# Preserve captured HTTP CRLF and empty packet fields verbatim.
+evidence/*-headers.txt -text -whitespace
+evidence/*.tsv -text -whitespace
+evidence/*.html -whitespace

@@ -1,0 +1,47 @@
+<!doctype html><meta charset="utf-8"><title>V07 before evidence</title><style>
+        *{box-sizing:border-box}body{margin:0;padding:30px 38px;background:#fff;color:#171717;font:19px Arial,sans-serif}
+        .meta{font-size:16px;color:#444}h1{font-size:30px;margin:18px 0 10px}h2{font-size:20px;margin:18px 0 10px}
+        pre{font:16px/1.42 Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:16px;background:#f5f5f5;border:1px solid #ddd}
+        .status{font-size:27px;font-weight:700}footer{margin-top:18px;font-size:14px;color:#444}
+        </style><div class="meta">RECORDED HTTP EVIDENCE / BEFORE HARDENING / 15 OCTOBER 2026 UTC</div>
+        <h1>V07 Exposed diagnostics and missing headers</h1><p>http://127.0.0.1:8080 &nbsp; <span class="status">HTTP 200</span></p>
+        <h2>Request</h2><pre>GET /debug
+{}
+</pre><h2>Observed response</h2><pre>{
+  &quot;Content-Type&quot;: &quot;application/json&quot;
+}
+
+{
+  &quot;database&quot;: &quot;/lab/state/legacydesk.sqlite3&quot;,
+  &quot;debug&quot;: true,
+  &quot;session&quot;: &quot;unsigned user_id cookie&quot;,
+  &quot;users&quot;: [
+    {
+      &quot;id&quot;: 1,
+      &quot;username&quot;: &quot;admin&quot;,
+      &quot;password&quot;: &quot;admin&quot;,
+      &quot;name&quot;: &quot;Portal Administrator&quot;,
+      &quot;email&quot;: &quot;admin@example.test&quot;,
+      &quot;role&quot;: &quot;admin&quot;
+    },
+    {
+      &quot;id&quot;: 2,
+      &quot;username&quot;: &quot;alice&quot;,
+      &quot;password&quot;: &quot;alice123&quot;,
+      &quot;name&quot;: &quot;Alice Morgan&quot;,
+      &quot;email&quot;: &quot;alice.updated@example.test&quot;,
+      &quot;role&quot;: &quot;employee&quot;
+    },
+    {
+      &quot;id&quot;: 3,
+      &quot;username&quot;: &quot;bob&quot;,
+      &quot;password&quot;: &quot;bob123&quot;,
+      &quot;name&quot;: &quot;Bob Chen&quot;,
+      &quot;email&quot;: &quot;bob@example.test&quot;,
+      &quot;role&quot;: &quot;employee&quot;
+    }
+  ]
+}
+
+CSP, X-Frame-Options and X-Content-Type-Options: absent.</pre>
+        <footer>Source: output/evidence/baseline-20261015T065446247953Z/http-captures.json<br>Selected fields from real requests. Live v2 credentials and tokens are redacted. This is an evidence viewer, not the application interface.</footer>

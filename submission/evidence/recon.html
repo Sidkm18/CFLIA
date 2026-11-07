@@ -1,0 +1,13 @@
+<meta charset="utf-8"><title>Local service enumeration</title><style>body{font:20px Arial;padding:24px;color:#111}h1{font-size:30px}pre{font:18px/1.6 Menlo;white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f6f6;padding:20px}footer{font-size:16px}</style><h1>Local service enumeration</h1><p>Recorded local tool output / 15 October 2026</p><pre># Nmap 7.991 scan initiated Thu Oct 15 12:24:33 2026 as: nmap -sT -sV --version-light -Pn -p 8080,8082,8091,8443 -oN submission/evidence/recon-nmap.txt 127.0.0.1
+Nmap scan report for localhost (127.0.0.1)
+Host is up (0.00022s latency).
+
+PORT     STATE SERVICE  VERSION
+8080/tcp open  http     nginx 1.30.5
+8082/tcp open  http     nginx
+8091/tcp open  http     SimpleHTTPServer 0.6 (Python 3.12.15)
+8443/tcp open  ssl/http nginx
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Thu Oct 15 12:24:45 2026 -- 1 IP address (1 host up) scanned in 12.16 seconds
+</pre><footer>Actual tool output. These views present captured evidence, not application pages.</footer>

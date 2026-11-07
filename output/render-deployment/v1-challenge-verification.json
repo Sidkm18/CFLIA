@@ -1,0 +1,95 @@
+{
+  "verified_at": "2026-10-18T17:43:00.466569+00:00",
+  "base_url": "https://legacydesk-v1-demo.onrender.com",
+  "commit": "926f5ebd7a997373d32d99bc93fa46d0f78d938a",
+  "checks": [
+    {
+      "check": "live health",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "recover only ticket passphrase",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "recover only admin passphrase",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "recover only traversal passphrase",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "recover only debug passphrase",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "ordinary employee denied admin passphrase",
+      "passed": true,
+      "http_status": 403
+    },
+    {
+      "check": "no answer leakage: /challenge",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "vault responses not cached",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "no answer leakage: /login",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "no answer leakage: /tickets",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "no answer leakage: /download?file=employee-handbook.txt",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "reject missing answers",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "reject wrong answers",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "reject repeated answers",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "reject duplicate parameter answers",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "all four unlock flag in any order with normalization",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "check": "fresh request stays locked after successful submission",
+      "passed": true,
+      "http_status": 200
+    }
+  ],
+  "passed": 17,
+  "failed": 0,
+  "notes": "Bounded functional checks only. No load testing. Game answers and response bodies omitted."
+}

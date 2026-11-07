@@ -2,6 +2,8 @@
 
 Employee support portal with a vulnerable Python version and a hardened Flask version. Both use fictional accounts and SQLite data.
 
+The complete recreation guide is [RESTORE.md](RESTORE.md). Reports and evidence are indexed in [submission/README.md](submission/README.md).
+
 ## Run
 
 Requires Docker Compose, Python 3, and OpenSSL.
@@ -27,4 +29,4 @@ docker compose down
 docker compose -f v2/compose.yaml down
 ```
 
-The Render Dockerfiles and hosting configuration are on the [deployment branch](https://github.com/Sidkm18/CFLIA/tree/deploy/render-free-demos).
+The Render Dockerfiles and hosting configuration are included under [deploy/render](deploy/render/README.md).

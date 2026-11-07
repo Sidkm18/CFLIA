@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-18",
+  "source": "https://legacydesk-csrf-demo.onrender.com",
+  "scope": "User-initiated plain HTML browser forms only; no load traffic",
+  "v1": {
+    "submitted_email": "csrf.hosted.v1@example.test",
+    "observed": "Account details updated; refreshed original account visibly shows submitted email",
+    "screenshot": "csrf-v1-account-after.jpg"
+  },
+  "v2": {
+    "submitted_email": "csrf.hosted.v2@example.test",
+    "observed": "Access unavailable; refreshed authenticated account visibly shows alice.updated@example.test, not submitted email",
+    "screenshots": [
+      "csrf-v2-rejected.jpg",
+      "csrf-v2-account-after.jpg"
+    ],
+    "normal_action": "Own account form accepted alice.normal.render@example.test and displayed Account details updated after the blocked external form"
+  },
+  "limitations": [
+    "Browser DOM textboxes redact values; account outcomes verified visually in screenshots rather than programmatic value comparisons",
+    "V2 browser result combines cookie policy and server controls, not an isolated CSRF-token test"
+  ],
+  "excluded": [
+    "V08 availability testing",
+    "overload simulation"
+  ]
+}

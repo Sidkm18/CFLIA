@@ -1,0 +1,199 @@
+{
+  "baseline_source": "output/evidence/baseline-20261015T065446247953Z",
+  "hardened_source": "v2/output/verification-20261015T070630Z",
+  "baseline": {
+    "recorded_at_utc": "2026-10-15T06:54:46.247953+00:00",
+    "stage": "vulnerable",
+    "target": "http://127.0.0.1:8080",
+    "findings": [
+      {
+        "id": "V01",
+        "title": "SQL injection",
+        "baseline_failure_observed": true,
+        "detail": "Injected sign-in selects the admin account without its password."
+      },
+      {
+        "id": "V02",
+        "title": "Stored XSS",
+        "baseline_failure_observed": true,
+        "detail": "Harmless SVG payload stored and returned as raw markup. Browser execution requires separate visual verification."
+      },
+      {
+        "id": "V03",
+        "title": "Broken access control (IDOR)",
+        "baseline_failure_observed": true,
+        "detail": "Alice can read Bob's confidential fictional ticket by changing its ID."
+      },
+      {
+        "id": "V04",
+        "title": "Weak authentication / forged session",
+        "baseline_failure_observed": true,
+        "detail": "Alice is denied; an unsigned identity cookie grants administrator access without credentials."
+      },
+      {
+        "id": "V05",
+        "title": "CSRF",
+        "baseline_failure_observed": true,
+        "detail": "Cross-origin POST with the session cookie updates email without a token. Browser cookie behaviour must be verified separately."
+      },
+      {
+        "id": "V06",
+        "title": "Path traversal",
+        "baseline_failure_observed": true,
+        "detail": "Download escapes its public directory into a private dummy fixture."
+      },
+      {
+        "id": "V07",
+        "title": "Security misconfiguration",
+        "baseline_failure_observed": true,
+        "detail": "Public debug leaks fictional plaintext passwords; missing headers: content-security-policy, x-content-type-options, x-frame-options"
+      },
+      {
+        "id": "V08",
+        "title": "Unrestricted expensive requests",
+        "baseline_failure_observed": true,
+        "detail": "All 40 expensive authenticated requests accepted using four workers; no rate-limit response."
+      }
+    ],
+    "load_probe": {
+      "requests": 40,
+      "concurrency": 4,
+      "elapsed_seconds": 2.055,
+      "throughput_rps": 19.46,
+      "status_counts": {
+        "200": 40
+      },
+      "median_latency_ms": 204.69,
+      "p95_latency_ms": 207.64,
+      "limitation": "Bounded local probe demonstrates missing admission controls; does not establish DoS, DDoS resistance or system resource consumption."
+    }
+  },
+  "hardened": {
+    "target": "https://127.0.0.1:8443",
+    "recorded_at_utc": "20261015T070630Z",
+    "checks": [
+      {
+        "check": "Original source preserved",
+        "passed": true,
+        "details": "Checked all 51 previously tracked files by SHA-256."
+      },
+      {
+        "check": "Original site still running",
+        "passed": true,
+        "details": "Read-only health request on port 8080."
+      },
+      {
+        "check": "HTTP redirects to HTTPS",
+        "passed": true,
+        "details": "Dedicated port 8082 redirects to 8443."
+      },
+      {
+        "check": "Legitimate HTTPS sign-in",
+        "passed": true,
+        "details": "Server-side session established using v2's generated password."
+      },
+      {
+        "check": "Session cookie policy",
+        "passed": true,
+        "details": "Cookie values redacted from all saved evidence."
+      },
+      {
+        "check": "V01 SQL injection blocked",
+        "passed": true,
+        "details": "CRS block. Direct origin tests also verify parameterised queries and safe login input."
+      },
+      {
+        "check": "V02 XSS blocked",
+        "passed": true,
+        "details": "CRS block. Direct origin tests separately verify output encoding."
+      },
+      {
+        "check": "V03 ticket ownership enforced",
+        "passed": true,
+        "details": "Alice cannot read Bob's ticket."
+      },
+      {
+        "check": "V04 session forgery rejected",
+        "passed": true,
+        "details": "Unsigned v1 identity cookie is ignored; Alice lacks the admin role."
+      },
+      {
+        "check": "V05 forged account update rejected",
+        "passed": true,
+        "details": "Cross-origin tokenless request cannot change Alice's email."
+      },
+      {
+        "check": "V06 traversal rejected",
+        "passed": true,
+        "details": "Edge rules plus a fixed-file allowlist at the origin."
+      },
+      {
+        "check": "V07 diagnostics removed and headers enabled",
+        "passed": true,
+        "details": "Secure headers are also present on error responses."
+      },
+      {
+        "check": "Legitimate use remains available",
+        "passed": true,
+        "details": "Normal comment and handbook download pass the WAF and app."
+      },
+      {
+        "check": "V08 expensive requests throttled",
+        "passed": true,
+        "details": "{\"requests\": 40, \"workers\": 4, \"elapsed_seconds\": 0.108, \"status_counts\": {\"200\": 5, \"429\": 35}, \"completed_responses_rps\": 369.64, \"median_latency_ms\": 5.46, \"p95_latency_ms\": 41.59, \"limitation\": \"Same request count and concurrency as v1; includes TLS and rejected requests. Throughput is not accepted report throughput or proof of DDoS resistance.\"}"
+      },
+      {
+        "check": "Edge errors disable caching",
+        "passed": true,
+        "details": "WAF blocks and gateway rate-limit responses include Cache-Control: no-store."
+      },
+      {
+        "check": "Logout invalidates session",
+        "passed": true,
+        "details": "Old cookie no longer authenticates after logout."
+      },
+      {
+        "check": "Real WAF audit evidence",
+        "passed": true,
+        "details": "{\"rule_ids\": [\"920350\", \"930110\", \"930120\", \"941100\", \"941120\", \"941160\", \"942100\", \"949110\"], \"crs_versions\": [\"OWASP_CRS/4.30.0\"], \"application_security_events\": [\"access_denied\", \"csrf_rejected\", \"invalid_session\", \"login_succeeded\", \"logout\", \"request\"], \"gateway_rejections\": 105}"
+      }
+    ],
+    "load_probe": {
+      "requests": 40,
+      "workers": 4,
+      "elapsed_seconds": 0.108,
+      "status_counts": {
+        "200": 5,
+        "429": 35
+      },
+      "completed_responses_rps": 369.64,
+      "median_latency_ms": 5.46,
+      "p95_latency_ms": 41.59,
+      "limitation": "Same request count and concurrency as v1; includes TLS and rejected requests. Throughput is not accepted report throughput or proof of DDoS resistance."
+    },
+    "waf_evidence": {
+      "rule_ids": [
+        "920350",
+        "930110",
+        "930120",
+        "941100",
+        "941120",
+        "941160",
+        "942100",
+        "949110"
+      ],
+      "crs_versions": [
+        "OWASP_CRS/4.30.0"
+      ],
+      "application_security_events": [
+        "access_denied",
+        "csrf_rejected",
+        "invalid_session",
+        "login_succeeded",
+        "logout",
+        "request"
+      ],
+      "gateway_rejections": 105
+    }
+  }
+}

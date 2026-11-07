@@ -1,0 +1,74 @@
+{
+  "checked_at": "2026-10-17T13:41:54.031356+00:00",
+  "source_repository": "https://github.com/Sidkm18/CFLIA",
+  "source_branch": "deploy/render-free-demos",
+  "source_commit": "8330f02",
+  "local_gateway_checks": {
+    "passed": 23,
+    "total": 23
+  },
+  "direct_application_tests": {
+    "passed": 19,
+    "total": 19
+  },
+  "nginx_config": "passed",
+  "modsecurity": "3.0.17",
+  "modsecurity_nginx": "1.0.4",
+  "loaded_rules": 856,
+  "observed_rule_ids": [
+    "930110",
+    "930120",
+    "941100",
+    "941120",
+    "941160",
+    "942100",
+    "949110"
+  ],
+  "local_architecture": "linux/arm64",
+  "hosted_deployment_status": "live_verified",
+  "database_persistence": "ephemeral_resets_accepted_by_user",
+  "source_sha256": {
+    "app/server.py": "2cc8a856297e71a6f90e9e5c4231317f65316c80ed589b413f628ff13ccb7ebf",
+    "app/static/style.css": "a862a71584c64dfb7d64d7e3c04e5318763235417c5a5b8ae6a8a32ef4c155c2",
+    "app/fixtures/private/legacy-config.txt": "9dcffae5303f7ef2a2a78775e24e37380d0f230bf0467ec333350045e64831d2",
+    "app/fixtures/downloads/employee-handbook.txt": "e0ce7496fcaaeb290a88237deb4e4c40faa1d4c5831078a0dc380d4a9ca8ca51",
+    "v2/app/server.py": "8144a9b391934fe47ae9a8722344195b69e2fedc07f0cac5f06814d220442052",
+    "v2/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "v2/app/views.py": "76b69022724ea7ca028173bc2fb9b5e23a7518554c4930aad7afb568ec4804a4",
+    "v2/app/static/style.css": "380fe7a000c6b1980046fd5a20e9837f03fa1a5ed2251ef576dc7581f5929933",
+    "v2/app/fixtures/downloads/employee-handbook.txt": "e0ce7496fcaaeb290a88237deb4e4c40faa1d4c5831078a0dc380d4a9ca8ca51",
+    "deploy/render/Dockerfile.v2": "9e59bfb99952382d4dadba5a4d5eabc4149b27f73637002ccbd1dc100bd48bfe",
+    "deploy/render/nginx-v1.conf": "4dd4a66959c634fb68fffd6f48b123784bdad3faf29ab1fa88d5095f4b16e8b9",
+    "deploy/render/render_wsgi.py": "e33d672d4e7d27f19d9bee98583440bbf33d89f09d075eb22ec6464116fd5868",
+    "deploy/render/README.md": "d15275859a608fea27a09beee3616835d0d092ccaec2eb647462b7f62bf56555",
+    "deploy/render/Dockerfile.v1": "305631c4c6b7c96c1de84a083b97c98b1b75e3f0272ba39239c0198010449472",
+    "deploy/render/verify_local.py": "e57fff488418125f8cb7ce2e66e1e94aa5620625dc34be44a71c187f2486d9de",
+    "deploy/render/supervise.py": "d9052474f6d75eb8d379ebc5495f986babce56fa9929b89c59071213dac6bda8",
+    "deploy/render/nginx-v2.conf.template": "f11acf3d91da0aff85d00575a921a2841542db2625bdf744501b12dc3398fa40"
+  },
+  "live_verified_at": "2026-10-17T14:48:16.472549+00:00",
+  "hosted_services": {
+    "v1": {
+      "url": "https://legacydesk-v1-demo.onrender.com",
+      "service_id": "srv-db9ohtqjnfac73d2ekl0",
+      "project": "CFL_IA_V1",
+      "plan": "free"
+    },
+    "v2": {
+      "url": "https://legacydesk-v2-demo.onrender.com",
+      "service_id": "srv-db9oi73ncjis73a3m9r0",
+      "project": "CFL_IA_V2",
+      "plan": "free"
+    }
+  },
+  "hosted_checks": {
+    "passed": 25,
+    "platform_filtered": 1,
+    "total": 26
+  },
+  "limitations": [
+    "Cloudflare filters the standard V1 SQL injection login payload at the edge.",
+    "SQLite data and sessions reset when a free service sleeps, restarts, or redeploys.",
+    "Combined containers retain WAF/app controls but do not reproduce the local Docker network separation."
+  ]
+}

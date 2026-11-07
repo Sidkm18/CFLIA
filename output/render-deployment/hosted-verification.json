@@ -1,0 +1,164 @@
+{
+  "checked_at": "2026-10-17T14:45:30.941885+00:00",
+  "urls": {
+    "1": "https://legacydesk-v1-demo.onrender.com",
+    "2": "https://legacydesk-v2-demo.onrender.com"
+  },
+  "checks": [
+    {
+      "name": "V1 /health available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 /static/style.css available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 /login available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V2 /health available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V2 /static/style.css available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V2 /login available over trusted HTTPS",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 SQL injection hosted demonstration",
+      "passed": null,
+      "http_status": 403,
+      "outcome": "platform_filtered"
+    },
+    {
+      "name": "V1 cookie permits hosted CSRF demonstration",
+      "passed": true,
+      "http_status": null
+    },
+    {
+      "name": "V1 stored XSS retained",
+      "passed": true,
+      "http_status": 303
+    },
+    {
+      "name": "V1 IDOR retained",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 forged administrator cookie retained",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 tokenless cross-origin write retained",
+      "passed": true,
+      "http_status": 303
+    },
+    {
+      "name": "V1 fixture traversal retained",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 debug exposure retained",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V1 lacks application CSP",
+      "passed": true,
+      "http_status": null
+    },
+    {
+      "name": "V1 report accessible (ONE request; no load test)",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V2 gateway security headers",
+      "passed": true,
+      "http_status": 200
+    },
+    {
+      "name": "V2 secure pre-login session cookie",
+      "passed": true,
+      "http_status": null
+    },
+    {
+      "name": "V2 debug removed",
+      "passed": true,
+      "http_status": 404
+    },
+    {
+      "name": "V2 forged V1 cookie denied",
+      "passed": true,
+      "http_status": 401
+    },
+    {
+      "name": "V2 forged identity cannot read Bob ticket",
+      "passed": true,
+      "http_status": 401
+    },
+    {
+      "name": "V2 traversal denied",
+      "passed": true,
+      "http_status": 403
+    },
+    {
+      "name": "V2 anonymous report denied",
+      "passed": true,
+      "http_status": 401
+    },
+    {
+      "name": "V2 SQLi request denied",
+      "passed": true,
+      "http_status": 403
+    },
+    {
+      "name": "V2 XSS request denied",
+      "passed": true,
+      "http_status": 403
+    },
+    {
+      "name": "V2 cross-origin write denied",
+      "passed": true,
+      "http_status": 403
+    }
+  ],
+  "passed": 25,
+  "total": 26,
+  "platform_filtered": 1,
+  "limitations": [
+    "The standard V01 SQLi login payload returns Cloudflare HTTP 403 with title Blocked and no Render origin marker. The same unchanged V1 application was independently verified vulnerable locally."
+  ],
+  "load_test_performed": false,
+  "notes": "Authenticated V2 browser workflows and WAF audit IDs are verified separately. Root-cause security suite: 19 local tests. Local combined-image checks: 23.",
+  "platform_response_classified_at": "2026-10-17T14:47:20.838582+00:00",
+  "browser_checks": {
+    "v1_sign_in": true,
+    "v2_generated_password_sign_in": true,
+    "v1_alice_reads_bob_ticket": true,
+    "v2_alice_denied_bob_ticket": true,
+    "v1_harmless_stored_xss_executed": true,
+    "v2_normal_comment_succeeds": true,
+    "v2_harmless_xss_comment_blocked": true,
+    "hosted_v2_crs_ids": [
+      "941100",
+      "941120",
+      "941160",
+      "949110"
+    ]
+  }
+}

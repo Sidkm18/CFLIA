@@ -1,0 +1,23 @@
+<!doctype html><meta charset="utf-8"><title>V08 after evidence</title><style>
+        *{box-sizing:border-box}body{margin:0;padding:30px 38px;background:#fff;color:#171717;font:19px Arial,sans-serif}
+        .meta{font-size:16px;color:#444}h1{font-size:30px;margin:18px 0 10px}h2{font-size:20px;margin:18px 0 10px}
+        pre{font:16px/1.42 Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:16px;background:#f5f5f5;border:1px solid #ddd}
+        .status{font-size:27px;font-weight:700}footer{margin-top:18px;font-size:14px;color:#444}
+        </style><div class="meta">RECORDED HTTP EVIDENCE / AFTER HARDENING / 15 OCTOBER 2026 UTC</div>
+        <h1>V08 Unrestricted expensive requests</h1><p>https://127.0.0.1:8443 &nbsp; <span class="status">40 requests / 4 workers</span></p>
+        <h2>Request</h2><pre>GET /reports/export
+Authenticated Alice session
+Bounded local request batch</pre><h2>Observed response</h2><pre>{
+  &quot;requests&quot;: 40,
+  &quot;workers&quot;: 4,
+  &quot;elapsed_seconds&quot;: 0.108,
+  &quot;status_counts&quot;: {
+    &quot;200&quot;: 5,
+    &quot;429&quot;: 35
+  },
+  &quot;completed_responses_rps&quot;: 369.64,
+  &quot;median_latency_ms&quot;: 5.46,
+  &quot;p95_latency_ms&quot;: 41.59,
+  &quot;limitation&quot;: &quot;Same request count and concurrency as v1; includes TLS and rejected requests. Throughput is not accepted report throughput or proof of DDoS resistance.&quot;
+}</pre>
+        <footer>Source: v2/output/verification-20261015T070630Z/results.json<br>Selected fields from real requests. Live v2 credentials and tokens are redacted. This is an evidence viewer, not the application interface.</footer>

@@ -1,0 +1,4 @@
+CONTAINER ID   NAME                      CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O    PIDS
+800a8c510a04   legacydesk-v2-app-1       0.26%     48.12MiB / 512MiB   9.40%     28.7kB / 95.2kB   0B / 705kB   6
+5432402769e9   legacydesk-v2-waf-1       0.00%     41.58MiB / 512MiB   8.12%     292kB / 288kB     0B / 557kB   2
+88af7b3a4e73   legacydesk-v2-gateway-1   0.00%     11.41MiB / 128MiB   8.91%     183kB / 286kB     0B / 4.1kB   9

@@ -1,0 +1,4 @@
+CONTAINER                    REPOSITORY           TAG                 PLATFORM            IMAGE ID            SIZE                CREATED
+legacydesk-lab-app-1         legacydesk-lab-app   latest              linux/arm64         6c4864fdad87        43.6MB              About a minute ago
+legacydesk-lab-csrf-demo-1   python               3.12-slim           linux/arm64/v8      a6e34c598f24        43.6MB              8 days ago
+legacydesk-lab-nginx-1       nginx                stable-alpine       linux/arm64/v8      0985e772fb9f        26MB                3 weeks ago

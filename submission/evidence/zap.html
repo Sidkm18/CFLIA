@@ -1,0 +1,22 @@
+<meta charset="utf-8"><title>OWASP ZAP request modification</title><style>body{font:20px Arial;padding:24px;color:#111}h1{font-size:30px}pre{font:18px/1.6 Menlo;white-space:pre-wrap;overflow-wrap:anywhere;background:#f6f6f6;padding:20px}footer{font-size:16px}</style><h1>OWASP ZAP request modification</h1><p>Recorded local tool output / 15 October 2026</p><pre>GET http://nginx/ticket?id=1001 HTTP/1.1
+Host: nginx
+User-Agent: curl/8.7.1
+Accept: */*
+Proxy-Connection: Keep-Alive
+Cookie: user_id=2
+
+
+HTTP/1.1 200 OK
+Other employee payroll disclosed: False
+
+GET http://nginx/ticket?id=1002 HTTP/1.1
+Host: nginx
+User-Agent: curl/8.7.1
+Accept: */*
+Proxy-Connection: Keep-Alive
+Cookie: user_id=2
+
+
+HTTP/1.1 200 OK
+Other employee payroll disclosed: True
+</pre><footer>Actual tool output. These views present captured evidence, not application pages.</footer>

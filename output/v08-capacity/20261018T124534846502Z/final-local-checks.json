@@ -1,0 +1,79 @@
+{
+  "captured_at_utc": "20261018T124534846502Z",
+  "scope": "Isolated local two-worker capacity lab; not a DDoS-resistance claim",
+  "checks": [
+    {
+      "check": "V1 ready after timeout refinement",
+      "passed": true
+    },
+    {
+      "check": "V1 still returns real capacity 503",
+      "passed": true
+    },
+    {
+      "check": "V1 still recovers after traffic",
+      "passed": true
+    },
+    {
+      "check": "original V1 remains healthy",
+      "passed": true,
+      "status": 200
+    },
+    {
+      "check": "original V2 remains healthy",
+      "passed": true,
+      "status": 200
+    }
+  ],
+  "traffic": {
+    "version": "v1",
+    "target": "http://127.0.0.1:18080/reports/export",
+    "workers": 4,
+    "max_requests": 360,
+    "max_requests_per_second": 4,
+    "requested_duration_seconds": 15,
+    "elapsed_seconds": 4.02,
+    "status_counts": {
+      "200": 2,
+      "503": 4
+    },
+    "responses": [
+      {
+        "request": 1,
+        "status": 503,
+        "latency_ms": 3.97,
+        "error": null
+      },
+      {
+        "request": 2,
+        "status": 200,
+        "latency_ms": 4015.83,
+        "error": null
+      },
+      {
+        "request": 3,
+        "status": 200,
+        "latency_ms": 4015.53,
+        "error": null
+      },
+      {
+        "request": 4,
+        "status": 503,
+        "latency_ms": 3.3,
+        "error": null
+      },
+      {
+        "request": 5,
+        "status": 503,
+        "latency_ms": 5.39,
+        "error": null
+      },
+      {
+        "request": 6,
+        "status": 503,
+        "latency_ms": 5.6,
+        "error": null
+      }
+    ]
+  }
+}

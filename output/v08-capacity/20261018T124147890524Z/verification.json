@@ -1,0 +1,344 @@
+{
+  "captured_at_utc": "20261018T124147890524Z",
+  "scope": "Isolated local two-worker capacity lab; not a DDoS-resistance claim",
+  "checks": [
+    {
+      "check": "V1 normal page before traffic",
+      "passed": true,
+      "status": 200,
+      "latency_ms": 4.33
+    },
+    {
+      "check": "V1 normal browsing receives real capacity refusals",
+      "passed": true,
+      "requests": [
+        {
+          "path": "/",
+          "status": 503,
+          "latency_ms": 1.62
+        },
+        {
+          "path": "/tickets",
+          "status": 503,
+          "latency_ms": 1.54
+        },
+        {
+          "path": "/",
+          "status": 503,
+          "latency_ms": 5.13
+        }
+      ]
+    },
+    {
+      "check": "V1 report jobs occupied capacity",
+      "passed": true,
+      "counts": {
+        "200": 4,
+        "503": 10
+      }
+    },
+    {
+      "check": "V1 no traffic transport errors",
+      "passed": true,
+      "counts": {
+        "200": 4,
+        "503": 10
+      }
+    },
+    {
+      "check": "V1 normal page after traffic stops",
+      "passed": true,
+      "status": 200,
+      "latency_ms": 9.36
+    },
+    {
+      "check": "V2 normal page before traffic",
+      "passed": true,
+      "status": 200,
+      "latency_ms": 10.59
+    },
+    {
+      "check": "V2 normal browsing remains available during report traffic",
+      "passed": true,
+      "requests": [
+        {
+          "path": "/",
+          "status": 200,
+          "latency_ms": 183.12
+        },
+        {
+          "path": "/tickets",
+          "status": 200,
+          "latency_ms": 10.8
+        },
+        {
+          "path": "/",
+          "status": 200,
+          "latency_ms": 15.77
+        }
+      ]
+    },
+    {
+      "check": "V2 rejects excess report requests",
+      "passed": true,
+      "counts": {
+        "200": 6,
+        "429": 14
+      }
+    },
+    {
+      "check": "V2 no traffic transport errors",
+      "passed": true,
+      "counts": {
+        "200": 6,
+        "429": 14
+      }
+    },
+    {
+      "check": "V2 normal page after traffic stops",
+      "passed": true,
+      "status": 200,
+      "latency_ms": 33.94
+    },
+    {
+      "check": "Original apps and Compose configuration preserved",
+      "passed": true
+    }
+  ],
+  "traffic": [
+    {
+      "version": "v1",
+      "target": "http://127.0.0.1:18080/reports/export",
+      "workers": 4,
+      "max_requests": 360,
+      "max_requests_per_second": 4,
+      "requested_duration_seconds": 15,
+      "elapsed_seconds": 8.02,
+      "status_counts": {
+        "200": 4,
+        "503": 10
+      },
+      "responses": [
+        {
+          "request": 1,
+          "status": 200,
+          "latency_ms": 4006.64,
+          "error": null
+        },
+        {
+          "request": 2,
+          "status": 503,
+          "latency_ms": 3.54,
+          "error": null
+        },
+        {
+          "request": 3,
+          "status": 200,
+          "latency_ms": 4008.71,
+          "error": null
+        },
+        {
+          "request": 4,
+          "status": 503,
+          "latency_ms": 3.61,
+          "error": null
+        },
+        {
+          "request": 5,
+          "status": 503,
+          "latency_ms": 2.97,
+          "error": null
+        },
+        {
+          "request": 6,
+          "status": 503,
+          "latency_ms": 1.89,
+          "error": null
+        },
+        {
+          "request": 7,
+          "status": 503,
+          "latency_ms": 2.1,
+          "error": null
+        },
+        {
+          "request": 8,
+          "status": 503,
+          "latency_ms": 1.95,
+          "error": null
+        },
+        {
+          "request": 9,
+          "status": 503,
+          "latency_ms": 5.58,
+          "error": null
+        },
+        {
+          "request": 10,
+          "status": 503,
+          "latency_ms": 3.83,
+          "error": null
+        },
+        {
+          "request": 11,
+          "status": 200,
+          "latency_ms": 4011.97,
+          "error": null
+        },
+        {
+          "request": 12,
+          "status": 200,
+          "latency_ms": 4010.21,
+          "error": null
+        },
+        {
+          "request": 13,
+          "status": 503,
+          "latency_ms": 1.85,
+          "error": null
+        },
+        {
+          "request": 14,
+          "status": 503,
+          "latency_ms": 1.37,
+          "error": null
+        }
+      ]
+    },
+    {
+      "version": "v2",
+      "target": "https://127.0.0.1:18443/reports/export",
+      "workers": 4,
+      "max_requests": 360,
+      "max_requests_per_second": 4,
+      "requested_duration_seconds": 15,
+      "elapsed_seconds": 4.25,
+      "status_counts": {
+        "200": 6,
+        "429": 14
+      },
+      "responses": [
+        {
+          "request": 1,
+          "status": 200,
+          "latency_ms": 16.01,
+          "error": null
+        },
+        {
+          "request": 2,
+          "status": 200,
+          "latency_ms": 18.7,
+          "error": null
+        },
+        {
+          "request": 3,
+          "status": 200,
+          "latency_ms": 10.07,
+          "error": null
+        },
+        {
+          "request": 4,
+          "status": 200,
+          "latency_ms": 11.59,
+          "error": null
+        },
+        {
+          "request": 5,
+          "status": 200,
+          "latency_ms": 204.84,
+          "error": null
+        },
+        {
+          "request": 6,
+          "status": 429,
+          "latency_ms": 192.0,
+          "error": null
+        },
+        {
+          "request": 7,
+          "status": 429,
+          "latency_ms": 217.05,
+          "error": null
+        },
+        {
+          "request": 8,
+          "status": 200,
+          "latency_ms": 187.69,
+          "error": null
+        },
+        {
+          "request": 9,
+          "status": 429,
+          "latency_ms": 23.84,
+          "error": null
+        },
+        {
+          "request": 10,
+          "status": 429,
+          "latency_ms": 28.66,
+          "error": null
+        },
+        {
+          "request": 11,
+          "status": 429,
+          "latency_ms": 33.54,
+          "error": null
+        },
+        {
+          "request": 12,
+          "status": 429,
+          "latency_ms": 7.81,
+          "error": null
+        },
+        {
+          "request": 13,
+          "status": 429,
+          "latency_ms": 16.1,
+          "error": null
+        },
+        {
+          "request": 14,
+          "status": 429,
+          "latency_ms": 11.63,
+          "error": null
+        },
+        {
+          "request": 15,
+          "status": 429,
+          "latency_ms": 8.18,
+          "error": null
+        },
+        {
+          "request": 16,
+          "status": 429,
+          "latency_ms": 21.15,
+          "error": null
+        },
+        {
+          "request": 17,
+          "status": 429,
+          "latency_ms": 45.85,
+          "error": null
+        },
+        {
+          "request": 18,
+          "status": 429,
+          "latency_ms": 30.49,
+          "error": null
+        },
+        {
+          "request": 19,
+          "status": 429,
+          "latency_ms": 20.52,
+          "error": null
+        },
+        {
+          "request": 20,
+          "status": 429,
+          "latency_ms": 6.9,
+          "error": null
+        }
+      ]
+    }
+  ]
+}

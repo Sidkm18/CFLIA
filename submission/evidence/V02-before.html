@@ -1,0 +1,20 @@
+<!doctype html><meta charset="utf-8"><title>V02 before evidence</title><style>
+        *{box-sizing:border-box}body{margin:0;padding:30px 38px;background:#fff;color:#171717;font:19px Arial,sans-serif}
+        .meta{font-size:16px;color:#444}h1{font-size:30px;margin:18px 0 10px}h2{font-size:20px;margin:18px 0 10px}
+        pre{font:16px/1.42 Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0;padding:16px;background:#f5f5f5;border:1px solid #ddd}
+        .status{font-size:27px;font-weight:700}footer{margin-top:18px;font-size:14px;color:#444}
+        </style><div class="meta">RECORDED HTTP EVIDENCE / BEFORE HARDENING / 15 OCTOBER 2026 UTC</div>
+        <h1>V02 Stored cross site scripting</h1><p>http://127.0.0.1:8080 &nbsp; <span class="status">HTTP 200</span></p>
+        <h2>Request</h2><pre>GET /ticket?id=1001
+{
+  &quot;Cookie&quot;: &quot;user_id=2&quot;
+}
+</pre><h2>Observed response</h2><pre>{
+  &quot;Content-Type&quot;: &quot;text/html; charset=utf-8&quot;
+}
+
+Stored response markup:
+&lt;svg onload=&quot;this.outerHTML=&#x27;&lt;p&gt;XSS executed&lt;/p&gt;&#x27;&quot;&gt;&lt;/svg&gt;
+
+Browser execution is captured separately in V02-before-browser.png.</pre>
+        <footer>Source: output/evidence/baseline-20261015T065446247953Z/http-captures.json<br>Selected fields from real requests. Live v2 credentials and tokens are redacted. This is an evidence viewer, not the application interface.</footer>

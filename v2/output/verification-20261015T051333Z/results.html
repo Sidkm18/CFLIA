@@ -1,0 +1,36 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>LegacyDesk verification results</title><style>body{font:14px/1.5 system-ui;color:#19241f;background:#f5f6f8;padding:35px;max-width:1150px;margin:auto}h1{font-size:32px}table{background:white;width:100%;border-collapse:collapse}td,th{text-align:left;padding:9px 16px;border-bottom:1px solid #e6eae6}th{background:#e5f0e9}td:last-child{color:#235c43;font-weight:600}pre{white-space:pre-wrap;background:white;padding:20px;border:1px solid #e6eae6;font-size:12px}.cols{display:grid;grid-template-columns:1.2fr 1fr;gap:25px}small{color:#758078}h2{font-size:18px}</style><small>CAPTURED LOCAL VERIFICATION / 20261015T051333Z</small><h1>Hardened portal: verified outcomes</h1><div class="cols"><section><table><tr><th>Check</th><th>Result</th></tr><tr><td>Original source preserved</td><td>PASS</td></tr><tr><td>Original site still running</td><td>PASS</td></tr><tr><td>HTTP redirects to HTTPS</td><td>PASS</td></tr><tr><td>Legitimate HTTPS sign-in</td><td>PASS</td></tr><tr><td>Session cookie policy</td><td>PASS</td></tr><tr><td>V01 SQL injection blocked</td><td>PASS</td></tr><tr><td>V02 XSS blocked</td><td>PASS</td></tr><tr><td>V03 ticket ownership enforced</td><td>PASS</td></tr><tr><td>V04 session forgery rejected</td><td>PASS</td></tr><tr><td>V05 forged account update rejected</td><td>PASS</td></tr><tr><td>V06 traversal rejected</td><td>PASS</td></tr><tr><td>V07 diagnostics removed and headers enabled</td><td>PASS</td></tr><tr><td>Legitimate use remains available</td><td>PASS</td></tr><tr><td>V08 expensive requests throttled</td><td>PASS</td></tr><tr><td>Logout invalidates session</td><td>PASS</td></tr><tr><td>Real WAF audit evidence</td><td>PASS</td></tr></table></section><section><h2>40 requests / four workers</h2><pre>{
+  &quot;requests&quot;: 40,
+  &quot;workers&quot;: 4,
+  &quot;elapsed_seconds&quot;: 0.065,
+  &quot;status_counts&quot;: {
+    &quot;200&quot;: 5,
+    &quot;429&quot;: 35
+  },
+  &quot;completed_responses_rps&quot;: 611.24,
+  &quot;median_latency_ms&quot;: 3.81,
+  &quot;p95_latency_ms&quot;: 15.22,
+  &quot;limitation&quot;: &quot;Same request count and concurrency as v1; includes TLS and rejected requests. Throughput is not accepted report throughput or proof of DDoS resistance.&quot;
+}</pre><h2>CRS audit evidence</h2><pre>{
+  &quot;rule_ids&quot;: [
+    &quot;920350&quot;,
+    &quot;930110&quot;,
+    &quot;930120&quot;,
+    &quot;941100&quot;,
+    &quot;941120&quot;,
+    &quot;941160&quot;,
+    &quot;942100&quot;,
+    &quot;949110&quot;
+  ],
+  &quot;crs_versions&quot;: [
+    &quot;OWASP_CRS/4.30.0&quot;
+  ],
+  &quot;application_security_events&quot;: [
+    &quot;access_denied&quot;,
+    &quot;csrf_rejected&quot;,
+    &quot;invalid_session&quot;,
+    &quot;login_succeeded&quot;,
+    &quot;logout&quot;,
+    &quot;request&quot;
+  ],
+  &quot;gateway_rejections&quot;: 35
+}</pre><p>Direct application tests: 18 passed.<br>Original tracked files: 51 unchanged.</p></section></div></html>

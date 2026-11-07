@@ -1,0 +1,377 @@
+{
+  "captured_at_utc": "20261018T124327169575Z",
+  "scope": "Isolated local two-worker capacity lab; not a DDoS-resistance claim",
+  "version": "v2",
+  "target": "https://127.0.0.1:18443/reports/export",
+  "workers": 4,
+  "max_requests": 360,
+  "max_requests_per_second": 4,
+  "requested_duration_seconds": 15,
+  "elapsed_seconds": 15.05,
+  "status_counts": {
+    "200": 6,
+    "429": 54
+  },
+  "responses": [
+    {
+      "request": 1,
+      "status": 200,
+      "latency_ms": 18.68,
+      "error": null
+    },
+    {
+      "request": 2,
+      "status": 200,
+      "latency_ms": 21.67,
+      "error": null
+    },
+    {
+      "request": 3,
+      "status": 200,
+      "latency_ms": 30.93,
+      "error": null
+    },
+    {
+      "request": 4,
+      "status": 200,
+      "latency_ms": 24.37,
+      "error": null
+    },
+    {
+      "request": 5,
+      "status": 200,
+      "latency_ms": 33.23,
+      "error": null
+    },
+    {
+      "request": 6,
+      "status": 429,
+      "latency_ms": 16.19,
+      "error": null
+    },
+    {
+      "request": 7,
+      "status": 200,
+      "latency_ms": 28.36,
+      "error": null
+    },
+    {
+      "request": 8,
+      "status": 429,
+      "latency_ms": 32.91,
+      "error": null
+    },
+    {
+      "request": 9,
+      "status": 429,
+      "latency_ms": 28.96,
+      "error": null
+    },
+    {
+      "request": 10,
+      "status": 429,
+      "latency_ms": 60.47,
+      "error": null
+    },
+    {
+      "request": 11,
+      "status": 429,
+      "latency_ms": 61.97,
+      "error": null
+    },
+    {
+      "request": 12,
+      "status": 429,
+      "latency_ms": 66.71,
+      "error": null
+    },
+    {
+      "request": 13,
+      "status": 429,
+      "latency_ms": 56.32,
+      "error": null
+    },
+    {
+      "request": 14,
+      "status": 429,
+      "latency_ms": 64.44,
+      "error": null
+    },
+    {
+      "request": 15,
+      "status": 429,
+      "latency_ms": 55.49,
+      "error": null
+    },
+    {
+      "request": 16,
+      "status": 429,
+      "latency_ms": 56.09,
+      "error": null
+    },
+    {
+      "request": 17,
+      "status": 429,
+      "latency_ms": 15.07,
+      "error": null
+    },
+    {
+      "request": 18,
+      "status": 429,
+      "latency_ms": 6.69,
+      "error": null
+    },
+    {
+      "request": 19,
+      "status": 429,
+      "latency_ms": 11.41,
+      "error": null
+    },
+    {
+      "request": 20,
+      "status": 429,
+      "latency_ms": 4.64,
+      "error": null
+    },
+    {
+      "request": 21,
+      "status": 429,
+      "latency_ms": 74.28,
+      "error": null
+    },
+    {
+      "request": 22,
+      "status": 429,
+      "latency_ms": 69.19,
+      "error": null
+    },
+    {
+      "request": 23,
+      "status": 429,
+      "latency_ms": 110.59,
+      "error": null
+    },
+    {
+      "request": 24,
+      "status": 429,
+      "latency_ms": 108.03,
+      "error": null
+    },
+    {
+      "request": 25,
+      "status": 429,
+      "latency_ms": 29.95,
+      "error": null
+    },
+    {
+      "request": 26,
+      "status": 429,
+      "latency_ms": 44.1,
+      "error": null
+    },
+    {
+      "request": 27,
+      "status": 429,
+      "latency_ms": 45.96,
+      "error": null
+    },
+    {
+      "request": 28,
+      "status": 429,
+      "latency_ms": 41.32,
+      "error": null
+    },
+    {
+      "request": 29,
+      "status": 429,
+      "latency_ms": 33.97,
+      "error": null
+    },
+    {
+      "request": 30,
+      "status": 429,
+      "latency_ms": 20.76,
+      "error": null
+    },
+    {
+      "request": 31,
+      "status": 429,
+      "latency_ms": 13.4,
+      "error": null
+    },
+    {
+      "request": 32,
+      "status": 429,
+      "latency_ms": 11.03,
+      "error": null
+    },
+    {
+      "request": 33,
+      "status": 429,
+      "latency_ms": 29.66,
+      "error": null
+    },
+    {
+      "request": 34,
+      "status": 429,
+      "latency_ms": 40.98,
+      "error": null
+    },
+    {
+      "request": 35,
+      "status": 429,
+      "latency_ms": 43.46,
+      "error": null
+    },
+    {
+      "request": 36,
+      "status": 429,
+      "latency_ms": 32.69,
+      "error": null
+    },
+    {
+      "request": 37,
+      "status": 429,
+      "latency_ms": 15.3,
+      "error": null
+    },
+    {
+      "request": 38,
+      "status": 429,
+      "latency_ms": 22.48,
+      "error": null
+    },
+    {
+      "request": 39,
+      "status": 429,
+      "latency_ms": 7.42,
+      "error": null
+    },
+    {
+      "request": 40,
+      "status": 429,
+      "latency_ms": 5.27,
+      "error": null
+    },
+    {
+      "request": 41,
+      "status": 429,
+      "latency_ms": 45.95,
+      "error": null
+    },
+    {
+      "request": 42,
+      "status": 429,
+      "latency_ms": 32.47,
+      "error": null
+    },
+    {
+      "request": 43,
+      "status": 429,
+      "latency_ms": 28.75,
+      "error": null
+    },
+    {
+      "request": 44,
+      "status": 429,
+      "latency_ms": 27.21,
+      "error": null
+    },
+    {
+      "request": 45,
+      "status": 429,
+      "latency_ms": 28.88,
+      "error": null
+    },
+    {
+      "request": 46,
+      "status": 429,
+      "latency_ms": 31.59,
+      "error": null
+    },
+    {
+      "request": 47,
+      "status": 429,
+      "latency_ms": 12.74,
+      "error": null
+    },
+    {
+      "request": 48,
+      "status": 429,
+      "latency_ms": 9.83,
+      "error": null
+    },
+    {
+      "request": 49,
+      "status": 429,
+      "latency_ms": 37.86,
+      "error": null
+    },
+    {
+      "request": 50,
+      "status": 429,
+      "latency_ms": 33.83,
+      "error": null
+    },
+    {
+      "request": 51,
+      "status": 429,
+      "latency_ms": 17.84,
+      "error": null
+    },
+    {
+      "request": 52,
+      "status": 429,
+      "latency_ms": 14.67,
+      "error": null
+    },
+    {
+      "request": 53,
+      "status": 429,
+      "latency_ms": 31.2,
+      "error": null
+    },
+    {
+      "request": 54,
+      "status": 429,
+      "latency_ms": 35.39,
+      "error": null
+    },
+    {
+      "request": 55,
+      "status": 429,
+      "latency_ms": 19.75,
+      "error": null
+    },
+    {
+      "request": 56,
+      "status": 429,
+      "latency_ms": 16.81,
+      "error": null
+    },
+    {
+      "request": 57,
+      "status": 429,
+      "latency_ms": 25.52,
+      "error": null
+    },
+    {
+      "request": 58,
+      "status": 429,
+      "latency_ms": 23.67,
+      "error": null
+    },
+    {
+      "request": 59,
+      "status": 429,
+      "latency_ms": 28.99,
+      "error": null
+    },
+    {
+      "request": 60,
+      "status": 429,
+      "latency_ms": 30.53,
+      "error": null
+    }
+  ]
+}

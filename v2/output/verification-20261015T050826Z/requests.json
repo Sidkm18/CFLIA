@@ -1,0 +1,138 @@
+[
+  {
+    "method": "GET",
+    "path": "/login",
+    "status": 200,
+    "latency_ms": 13.42,
+    "request_id": "1e9cf8dbb5840fcab3dc20f79cee9198",
+    "csrf_present": false
+  },
+  {
+    "method": "POST",
+    "path": "/login",
+    "status": 303,
+    "latency_ms": 95.26,
+    "request_id": "ace949e446cff097cc00b7aedcd7fcb5",
+    "csrf_present": true
+  },
+  {
+    "method": "GET",
+    "path": "/account",
+    "status": 200,
+    "latency_ms": 12.85,
+    "request_id": "00606d493dd5aaea749f480728a17677",
+    "csrf_present": false
+  },
+  {
+    "method": "POST",
+    "path": "/login",
+    "status": 403,
+    "latency_ms": 7.6,
+    "request_id": "4eb30f6d3ba3352e80d6deda87c3e44b",
+    "csrf_present": true
+  },
+  {
+    "method": "POST",
+    "path": "/comment",
+    "status": 403,
+    "latency_ms": 22.36,
+    "request_id": "da72b066717f0d7cb3c8edf182fcb99b",
+    "csrf_present": true
+  },
+  {
+    "method": "GET",
+    "path": "/ticket?id=1002",
+    "status": 403,
+    "latency_ms": 11.5,
+    "request_id": "c4512ac564a02124f2bdc891b60e1173",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/admin",
+    "status": 401,
+    "latency_ms": 10.47,
+    "request_id": "7efd06f0e1b2532427fff73efe7b7c2f",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/admin",
+    "status": 403,
+    "latency_ms": 10.81,
+    "request_id": "d8fc83c643c03c48348cfacad0580f7a",
+    "csrf_present": false
+  },
+  {
+    "method": "POST",
+    "path": "/account/email",
+    "status": 403,
+    "latency_ms": 12.1,
+    "request_id": "ad18e37b24e531a5ee81f26c37968a66",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/account",
+    "status": 200,
+    "latency_ms": 12.93,
+    "request_id": "5b0351c1cc2e70e1d6831b9954b75e00",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/download?file=..%2Fprivate%2Flegacy-config.txt",
+    "status": 403,
+    "latency_ms": 6.63,
+    "request_id": "02471eb9e1b17177f1ee8d52e3dd15d6",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/debug",
+    "status": 404,
+    "latency_ms": 8.24,
+    "request_id": "88334d2ca3beec9d5a37e09ea60064b2",
+    "csrf_present": false
+  },
+  {
+    "method": "POST",
+    "path": "/comment",
+    "status": 303,
+    "latency_ms": 22.0,
+    "request_id": "b986891aa43cd18412ec56668e230558",
+    "csrf_present": true
+  },
+  {
+    "method": "GET",
+    "path": "/ticket?id=1001",
+    "status": 200,
+    "latency_ms": 8.39,
+    "request_id": "6d50b589975b39c1c366cab36c8493a1",
+    "csrf_present": false
+  },
+  {
+    "method": "GET",
+    "path": "/download?file=employee-handbook.txt",
+    "status": 200,
+    "latency_ms": 10.85,
+    "request_id": "fde11e8b8a9f70da1dd90c1f11d276f2",
+    "csrf_present": false
+  },
+  {
+    "method": "POST",
+    "path": "/logout",
+    "status": 303,
+    "latency_ms": 12.23,
+    "request_id": "1705ce56b4a93261aae08b592eb3e229",
+    "csrf_present": true
+  },
+  {
+    "method": "GET",
+    "path": "/account",
+    "status": 401,
+    "latency_ms": 10.17,
+    "request_id": "9ef85272848b5e13148c60384c6c6065",
+    "csrf_present": false
+  }
+]

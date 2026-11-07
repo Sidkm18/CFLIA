@@ -1,0 +1,92 @@
+[
+  {
+    "heading": "V08 local availability demonstration",
+    "intro": "These browser captures show the separate local capacity lab on 18 October 2026. It uses two shared workers and four-second V1 report jobs to make request contention visible.",
+    "images": [
+      {
+        "path": "output/v08-capacity/screenshots/v1-before.jpg",
+        "caption": "V1 before traffic: the ticket page loads normally in the local capacity lab.",
+        "max_height": 3.35
+      },
+      {
+        "path": "output/v08-capacity/screenshots/v1-during-traffic.jpg",
+        "caption": "V1 during report traffic: both workers are occupied and the browser receives HTTP 503.",
+        "max_height": 3.35
+      }
+    ]
+  },
+  {
+    "heading": "V08 recovery after stopping traffic",
+    "intro": "After stopping the traffic script with Ctrl+C and allowing running jobs to finish, the same browser ticket page became available again without restarting the server.",
+    "images": [
+      {
+        "path": "output/v08-capacity/screenshots/v1-after-stop.jpg",
+        "caption": "V1 after traffic stops: the ticket page is available again in the same browser tab.",
+        "max_height": 4.1
+      }
+    ],
+    "after": [
+      "V2 was checked separately over HTTPS with the local CA certificate. During the short verification, excess report requests returned HTTP 429 while the tested normal pages returned HTTP 200. Its report quota and cache reduced repeated work.",
+      "The screenshot above records V1 recovery. V2 availability is supported by the recorded HTTPS checks; no V2 browser capture from this capacity test is presented here. This deliberately constrained local test does not establish resistance to distributed denial-of-service attacks."
+    ]
+  },
+  {
+    "heading": "V05 hosted external form",
+    "intro": "The CSRF demonstration uses a separate Render-hosted website. Each button submits one account-update request to the selected portal without a CSRF token. The page does not collect portal passwords or session cookies.",
+    "images": [
+      {
+        "path": "output/render-deployment/csrf-site-live.jpg",
+        "caption": "The hosted external form used for the V1 and V2 account-update comparison on 18 October 2026.",
+        "max_height": 6.0
+      }
+    ]
+  },
+  {
+    "heading": "V05 hosted account state comparison",
+    "intro": "After submitting the external form, we refreshed the original authenticated account tabs. V1 showed the submitted email; V2 retained its previous email.",
+    "images": [
+      {
+        "path": "output/render-deployment/csrf-v1-account-after.jpg",
+        "caption": "V1 accepted the external update and saved csrf.hosted.v1@example.test.",
+        "max_height": 3.35
+      },
+      {
+        "path": "output/render-deployment/csrf-v2-account-after.jpg",
+        "caption": "V2 retained alice.updated@example.test after the external request was rejected.",
+        "max_height": 3.35
+      }
+    ]
+  },
+  {
+    "heading": "V05 rejected request and legitimate update",
+    "intro": "The external V2 submission was rejected. A later update made through the portal's own account form succeeded. These captures show the combined browser-cookie and server-side CSRF protections.",
+    "images": [
+      {
+        "path": "output/render-deployment/csrf-v2-rejected.jpg",
+        "caption": "V2 response to the external form: Access unavailable.",
+        "max_height": 3.5
+      },
+      {
+        "path": "output/render-deployment/csrf-v2-normal-update.jpg",
+        "caption": "Captured confirmation area of a legitimate V2 account update: Account details updated.",
+        "max_height": 3.1
+      }
+    ]
+  },
+  {
+    "heading": "V03 hosted ticket ownership comparison",
+    "intro": "These Render captures from 17 October 2026 compare the same ticket request using Alice's account. All employee and payroll records shown are fictional lab data.",
+    "images": [
+      {
+        "path": "output/render-deployment/v1-idor-visible.jpg",
+        "caption": "V1 exposed Bob's ticket 1002 while the signed-in identity remained Alice.",
+        "max_height": 3.35
+      },
+      {
+        "path": "output/render-deployment/v2-idor-denied.jpg",
+        "caption": "V2 denied the same cross-account ticket request while Alice remained signed in.",
+        "max_height": 3.35
+      }
+    ]
+  }
+]

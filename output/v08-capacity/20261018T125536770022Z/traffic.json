@@ -1,0 +1,473 @@
+{
+  "captured_at_utc": "20261018T125536770022Z",
+  "scope": "Isolated local two-worker capacity lab; not a DDoS-resistance claim",
+  "version": "v1",
+  "target": "http://127.0.0.1:18080/reports/export",
+  "workers": 4,
+  "max_requests": 360,
+  "max_requests_per_second": 4,
+  "requested_duration_seconds": 60,
+  "elapsed_seconds": 32.1,
+  "status_counts": {
+    "200": 16,
+    "503": 60
+  },
+  "responses": [
+    {
+      "request": 1,
+      "status": 200,
+      "latency_ms": 4012.91,
+      "error": null
+    },
+    {
+      "request": 2,
+      "status": 200,
+      "latency_ms": 4011.57,
+      "error": null
+    },
+    {
+      "request": 3,
+      "status": 503,
+      "latency_ms": 2.54,
+      "error": null
+    },
+    {
+      "request": 4,
+      "status": 503,
+      "latency_ms": 1.77,
+      "error": null
+    },
+    {
+      "request": 5,
+      "status": 503,
+      "latency_ms": 2.74,
+      "error": null
+    },
+    {
+      "request": 6,
+      "status": 503,
+      "latency_ms": 1.77,
+      "error": null
+    },
+    {
+      "request": 7,
+      "status": 503,
+      "latency_ms": 5.01,
+      "error": null
+    },
+    {
+      "request": 8,
+      "status": 503,
+      "latency_ms": 3.65,
+      "error": null
+    },
+    {
+      "request": 9,
+      "status": 503,
+      "latency_ms": 4.3,
+      "error": null
+    },
+    {
+      "request": 10,
+      "status": 503,
+      "latency_ms": 1.98,
+      "error": null
+    },
+    {
+      "request": 11,
+      "status": 200,
+      "latency_ms": 4025.63,
+      "error": null
+    },
+    {
+      "request": 12,
+      "status": 200,
+      "latency_ms": 4026.83,
+      "error": null
+    },
+    {
+      "request": 13,
+      "status": 503,
+      "latency_ms": 3.59,
+      "error": null
+    },
+    {
+      "request": 14,
+      "status": 503,
+      "latency_ms": 3.89,
+      "error": null
+    },
+    {
+      "request": 15,
+      "status": 503,
+      "latency_ms": 3.09,
+      "error": null
+    },
+    {
+      "request": 16,
+      "status": 503,
+      "latency_ms": 3.34,
+      "error": null
+    },
+    {
+      "request": 17,
+      "status": 503,
+      "latency_ms": 3.25,
+      "error": null
+    },
+    {
+      "request": 18,
+      "status": 503,
+      "latency_ms": 3.34,
+      "error": null
+    },
+    {
+      "request": 19,
+      "status": 503,
+      "latency_ms": 3.83,
+      "error": null
+    },
+    {
+      "request": 20,
+      "status": 503,
+      "latency_ms": 3.08,
+      "error": null
+    },
+    {
+      "request": 21,
+      "status": 200,
+      "latency_ms": 4029.09,
+      "error": null
+    },
+    {
+      "request": 22,
+      "status": 200,
+      "latency_ms": 4026.84,
+      "error": null
+    },
+    {
+      "request": 23,
+      "status": 503,
+      "latency_ms": 5.11,
+      "error": null
+    },
+    {
+      "request": 24,
+      "status": 503,
+      "latency_ms": 2.92,
+      "error": null
+    },
+    {
+      "request": 25,
+      "status": 503,
+      "latency_ms": 3.49,
+      "error": null
+    },
+    {
+      "request": 26,
+      "status": 503,
+      "latency_ms": 2.24,
+      "error": null
+    },
+    {
+      "request": 27,
+      "status": 503,
+      "latency_ms": 2.9,
+      "error": null
+    },
+    {
+      "request": 28,
+      "status": 503,
+      "latency_ms": 1.93,
+      "error": null
+    },
+    {
+      "request": 29,
+      "status": 503,
+      "latency_ms": 2.47,
+      "error": null
+    },
+    {
+      "request": 30,
+      "status": 503,
+      "latency_ms": 1.68,
+      "error": null
+    },
+    {
+      "request": 31,
+      "status": 200,
+      "latency_ms": 4018.65,
+      "error": null
+    },
+    {
+      "request": 32,
+      "status": 200,
+      "latency_ms": 4016.67,
+      "error": null
+    },
+    {
+      "request": 33,
+      "status": 503,
+      "latency_ms": 5.8,
+      "error": null
+    },
+    {
+      "request": 34,
+      "status": 503,
+      "latency_ms": 4.79,
+      "error": null
+    },
+    {
+      "request": 35,
+      "status": 503,
+      "latency_ms": 2.07,
+      "error": null
+    },
+    {
+      "request": 36,
+      "status": 503,
+      "latency_ms": 1.25,
+      "error": null
+    },
+    {
+      "request": 37,
+      "status": 503,
+      "latency_ms": 2.97,
+      "error": null
+    },
+    {
+      "request": 38,
+      "status": 503,
+      "latency_ms": 2.35,
+      "error": null
+    },
+    {
+      "request": 39,
+      "status": 503,
+      "latency_ms": 6.96,
+      "error": null
+    },
+    {
+      "request": 40,
+      "status": 503,
+      "latency_ms": 5.04,
+      "error": null
+    },
+    {
+      "request": 41,
+      "status": 200,
+      "latency_ms": 4009.89,
+      "error": null
+    },
+    {
+      "request": 42,
+      "status": 200,
+      "latency_ms": 4009.2,
+      "error": null
+    },
+    {
+      "request": 43,
+      "status": 503,
+      "latency_ms": 2.96,
+      "error": null
+    },
+    {
+      "request": 44,
+      "status": 503,
+      "latency_ms": 2.96,
+      "error": null
+    },
+    {
+      "request": 45,
+      "status": 503,
+      "latency_ms": 4.49,
+      "error": null
+    },
+    {
+      "request": 46,
+      "status": 503,
+      "latency_ms": 3.68,
+      "error": null
+    },
+    {
+      "request": 47,
+      "status": 503,
+      "latency_ms": 5.82,
+      "error": null
+    },
+    {
+      "request": 48,
+      "status": 503,
+      "latency_ms": 4.97,
+      "error": null
+    },
+    {
+      "request": 49,
+      "status": 503,
+      "latency_ms": 4.52,
+      "error": null
+    },
+    {
+      "request": 50,
+      "status": 503,
+      "latency_ms": 4.05,
+      "error": null
+    },
+    {
+      "request": 51,
+      "status": 200,
+      "latency_ms": 4005.83,
+      "error": null
+    },
+    {
+      "request": 52,
+      "status": 200,
+      "latency_ms": 4005.58,
+      "error": null
+    },
+    {
+      "request": 53,
+      "status": 503,
+      "latency_ms": 1.89,
+      "error": null
+    },
+    {
+      "request": 54,
+      "status": 503,
+      "latency_ms": 1.39,
+      "error": null
+    },
+    {
+      "request": 55,
+      "status": 503,
+      "latency_ms": 1.38,
+      "error": null
+    },
+    {
+      "request": 56,
+      "status": 503,
+      "latency_ms": 4.65,
+      "error": null
+    },
+    {
+      "request": 57,
+      "status": 503,
+      "latency_ms": 3.73,
+      "error": null
+    },
+    {
+      "request": 58,
+      "status": 503,
+      "latency_ms": 3.97,
+      "error": null
+    },
+    {
+      "request": 59,
+      "status": 503,
+      "latency_ms": 2.86,
+      "error": null
+    },
+    {
+      "request": 60,
+      "status": 503,
+      "latency_ms": 2.12,
+      "error": null
+    },
+    {
+      "request": 61,
+      "status": 200,
+      "latency_ms": 4011.39,
+      "error": null
+    },
+    {
+      "request": 62,
+      "status": 200,
+      "latency_ms": 4009.98,
+      "error": null
+    },
+    {
+      "request": 63,
+      "status": 503,
+      "latency_ms": 1.64,
+      "error": null
+    },
+    {
+      "request": 64,
+      "status": 503,
+      "latency_ms": 2.29,
+      "error": null
+    },
+    {
+      "request": 65,
+      "status": 503,
+      "latency_ms": 4.06,
+      "error": null
+    },
+    {
+      "request": 66,
+      "status": 503,
+      "latency_ms": 2.83,
+      "error": null
+    },
+    {
+      "request": 67,
+      "status": 503,
+      "latency_ms": 2.37,
+      "error": null
+    },
+    {
+      "request": 68,
+      "status": 503,
+      "latency_ms": 1.11,
+      "error": null
+    },
+    {
+      "request": 69,
+      "status": 503,
+      "latency_ms": 2.19,
+      "error": null
+    },
+    {
+      "request": 70,
+      "status": 503,
+      "latency_ms": 1.57,
+      "error": null
+    },
+    {
+      "request": 71,
+      "status": 200,
+      "latency_ms": 4011.33,
+      "error": null
+    },
+    {
+      "request": 72,
+      "status": 200,
+      "latency_ms": 4010.62,
+      "error": null
+    },
+    {
+      "request": 73,
+      "status": 503,
+      "latency_ms": 1.93,
+      "error": null
+    },
+    {
+      "request": 74,
+      "status": 503,
+      "latency_ms": 1.78,
+      "error": null
+    },
+    {
+      "request": 75,
+      "status": 503,
+      "latency_ms": 2.64,
+      "error": null
+    },
+    {
+      "request": 76,
+      "status": 503,
+      "latency_ms": 1.2,
+      "error": null
+    }
+  ]
+}
